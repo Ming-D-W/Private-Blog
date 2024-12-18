@@ -1,21 +1,14 @@
 <template>
-  <div class="inner-box">
-    <el-menu
-      class="el-menu-demo right-aligned"
-      router
-      text-color="#000000"
-      active-text-color="#3989fa"
-      mode="vertical"
-      @select="handleSelect"
+  <div class="side-menu-box">
+    <div
+      class="side-item"
+      :class="checkIsActive(item.path)"
+      v-for="item in sideMenu"
+      :key="item.path"
+      @click="menuClickHandle(item.path)"
     >
-      <el-menu-item
-        v-for="(item, index) in sideMenu"
-        :index="item.path"
-        :key="index"
-      >
-        <span slot="title">{{ item.name }}</span>
-      </el-menu-item>
-    </el-menu>
+      {{ item.name }}
+    </div>
   </div>
 </template>
 
@@ -28,11 +21,29 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      activeMenu: "",
+    };
+  },
+  computed: {
+    activePath() {
+      const matchedPath = [...this.$route.matched];
+      const path = matchedPath.map((item) => item.path);
+      return path;
+    },
   },
   methods: {
     handleSelect(index) {
       this.$emit("select", index);
+    },
+    checkIsActive(path) {
+      return this.activePath.includes(path) ? "active" : "";
+    },
+    menuClickHandle(path) {
+      if (this.activePath.includes(path)) {
+        return;
+      }
+      this.$router.push(path);
     },
   },
 };
@@ -42,11 +53,54 @@ export default {
 $header-height-px: 64px;
 $page-min-width-px: 1366px;
 $menu-width-px: 200px;
+@function fadeout($color, $amount) {
+  $alpha: 1 - ($amount / 100); // 计算目标透明度
+  @return rgba(red($color), green($color), blue($color), $alpha);
+}
 
-.inner-box {
-  width: 100%;
-  min-width: $page-min-width-px;
-  margin: 0 auto;
-  overflow: hidden;
+.side-item {
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  position: relative;
+  color: #4e596a;
+  background-color: $color-white;
+  padding-left: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &:nth-child(n + 2) {
+    margin-top: 4px;
+  }
+
+  &:hover {
+    background-color: fadeout($color-primary, 92);
+  }
+
+  &.active {
+    color: $color-primary;
+    background-color: fadeout($color-primary, 92);
+
+    &::before {
+      content: "";
+      width: 2px;
+      height: 12px;
+      border-radius: 1px;
+      background-color: $color-primary;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.side-menu-box {
+  height: calc(100vh - $header-height);
+  background-color: $color-white;
+  padding: 8px;
+  box-sizing: border-box;
 }
 </style>

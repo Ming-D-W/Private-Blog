@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { AppMain, HeadBar, SlideBar } from "./components";
+import { HeadBar, SlideBar, AppMain } from "./components";
 export default {
   data() {
     return { listMenus: [], sideMenu: [] };
@@ -35,26 +35,11 @@ export default {
   },
   methods: {
     routingProcess() {
-      const result = [];
-      this.$router.options.routes.forEach((route) => {
-        if (route.children && route.children.length > 0) {
-          route.children.forEach((child) => {
-            // 保留子级的 children 并直接添加到结果中
-            const transformedRoute = {
-              path: child.path,
-              name: child.name,
-              component: child.component,
-              children: child.children || [], // 保留嵌套子路由
-            };
-            result.push(transformedRoute);
-          });
-        }
-      });
-      this.listMenus = result;
+      this.listMenus = this.$router.options.routes;
+      console.log(this.listMenus, 11);
     },
     findChildRoutes(routes, targetPath) {
       const result = [];
-
       // 递归遍历路由配置
       function traverse(routes) {
         for (const route of routes) {
@@ -68,14 +53,11 @@ export default {
           }
         }
       }
-
       traverse(routes);
-
       return result;
     },
     menuClickHandle(path) {
       this.sideMenu = this.findChildRoutes(this.$router.options.routes, path);
-      console.log(this.sideMenu);
     },
   },
 };
@@ -84,7 +66,7 @@ export default {
 <style scoped lang="scss">
 $header_height_px: 64px;
 $page_min_width_px: 1366px;
-$menu_width_px: 200px;
+$menu-width: 132px;
 $border_color_extra_light: #ebebeb; // 假设这个颜色值
 
 ::v-deep .el-container {
@@ -97,6 +79,7 @@ $border_color_extra_light: #ebebeb; // 假设这个颜色值
 
   .el-aside {
     height: calc(100vh - $header_height_px);
+    width: $menu-width !important;
   }
 
   .el-main {
