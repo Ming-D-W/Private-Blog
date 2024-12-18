@@ -1,0 +1,60 @@
+@function fadeout($color, $amount) {
+  $alpha: 1 - ($amount / 100); // 计算目标透明度
+  @return rgba(red($color), green($color), blue($color), $alpha);
+}
+
+// 主题色值变量
+$color-primary: #7052ff;
+$color-success: #67c23a;
+$color-warning: #ff7038;
+$color-danger: #FA2714;
+$color-info: #b3b9c5;
+$color-text-primary: #1d2129;
+$color-text-regular: #4e596a;
+$color-text-secondary: #86909d;
+$color-text-placeholder: #c9cdd4;
+$border-color-base: #f0f1f5;
+$border-color-light: #f0f1f5;
+$border-color-lighter: #f0f1f5;
+$border-color-extra-light: #f0f1f5;
+$color-white: #ffffff;
+$color-black: #000000;
+$background-color-base: #f7f8fa;
+
+$color-parachrome: #f6f5fc;
+
+// 菜单栏宽度
+$menus-width: 132px;
+$header-height: 64px;
+$page-minWidth: 1366px;
+
+/*                        颜色变量                          */
+// Primary/Primary-100%-P4
+$color-p: #7052ff;
+// Success/Success-100%-G4
+$color-g: #0fb820;
+// Success/Success-100%-G3
+$color-g3: #3CC781;
+// Warning/Warning-100%-O4
+$color-o: #ff7038;
+// Danger/Danger-100%-R4
+$color-r: #fa2714;
+// Danger/Danger-100%-R3
+$color-r3: #ff5252;
+
+//$color-primary: #7052ff;
+//$color-warning: #ff7038;
+$color-error: #fa2714;
+$color-regular: #4e596a;
+
+// 灰阶/Gray
+$color-gy1: #ffffff;
+$color-gy2: #f7f8fa;
+$color-gy3: #f0f1f5;
+$color-gy4: #eaebf0;
+$color-gy5: #e2e3e8;
+$color-gy6: #c9cdd4;
+$color-gy7: #86909d;
+$color-gy8: #4e596a;
+$color-gy9: #1d2129;
+$color-gy10: #000000;

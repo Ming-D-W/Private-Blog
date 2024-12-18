@@ -4,8 +4,35 @@ body {
   height: 100%;
 }
 
-* {
-  margin: 0 !important;
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+img,
+dt,
+dd,
+ol,
+ul,
+li,
+table,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+u,
+b,
+i {
+  margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
