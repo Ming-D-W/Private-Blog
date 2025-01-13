@@ -36,7 +36,6 @@ export default {
   methods: {
     routingProcess() {
       this.listMenus = this.$router.options.routes;
-      console.log(this.listMenus, 11);
     },
     findChildRoutes(routes, targetPath) {
       const result = [];

@@ -6,14 +6,14 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/", //根目录路由为/
-    redirect: "/home", //重定向至/home页面
+    path: "/",
+    redirect: "/home",
   },
   {
-    path: "/home", //根目录路由为/
+    path: "/home",
     name: "首页",
-    component: Layout, //指定使用Layout组件布局
-    redirect: "/home/home1", //重定向至/home页面
+    component: Layout,
+    redirect: "/home/home1",
     children: [
       {
         path: "/home/home1",
@@ -32,7 +32,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/list",
     name: "达人CRM",

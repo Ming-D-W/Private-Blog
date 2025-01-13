@@ -33,9 +33,6 @@ export default {
     },
   },
   methods: {
-    handleSelect(index) {
-      this.$emit("select", index);
-    },
     checkIsActive(path) {
       return this.activePath.includes(path) ? "active" : "";
     },
