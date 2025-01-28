@@ -10,7 +10,7 @@
           <!-- 左侧区域 -->
           <SlideBar :sideMenu="sideMenu"></SlideBar>
         </el-aside>
-        <el-main>
+        <el-main class="demo-content p-16">
           <!-- 内容区域 -->
           <AppMain></AppMain>
         </el-main>
@@ -67,6 +67,13 @@ $header_height_px: 64px;
 $page_min_width_px: 1366px;
 $menu-width: 132px;
 $border_color_extra_light: #ebebeb; // 假设这个颜色值
+
+::-webkit-scrollbar {
+  display: none;
+}
+.demo-content {
+  height: calc(100vh - $header_height_px);
+}
 
 ::v-deep .el-container {
   .el-header {
