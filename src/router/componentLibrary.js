@@ -1,26 +1,11 @@
-import Layout from "@/components/layout/index.vue";
-
-const componentLibrary = {
-  path: "/home",
+// 使用 require.context 获取所有 .md 文件
+const mdFiles = require.context(
+  "@/views/componentLibrary", // 目录路径
+  true, // 是否遍历子目录
+  /\.md$/ // 匹配文件的正则表达式
+);
+export const componentLibrary = {
+  mdFiles,
+  basePath: "/componentLibrary",
   name: "组件库",
-  component: Layout,
-  redirect: "/home/home1",
-  children: [
-    {
-      path: "/home/home1",
-      name: "首页1",
-      component: () => import("@/views/empty.md"),
-    },
-    {
-      path: "/home/home2",
-      name: "首页2",
-      component: () => import("@/views/home2"),
-    },
-    {
-      path: "/home/home3",
-      name: "首页3",
-      component: () => import("@/views/home"),
-    },
-  ],
 };
-export default componentLibrary;
