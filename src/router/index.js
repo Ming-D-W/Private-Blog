@@ -1,24 +1,70 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import componentLibrary from "@/router/componentLibrary";
-import { generateRoutes } from "@/router/interviewQuestion";
+import { interviewRouteConfig } from "@/router/interviewQuestion";
 import { generateCommonRoutes } from "@/plugins/routingRuleTool";
+import { componentLibrary } from "@/router/componentLibrary";
 Vue.use(VueRouter);
-const mdFiles = require.context("@/views/interviewQuestion", true, /\.md$/);
 const routes = [
   {
-    path: "/",
-    redirect: "/home",
+    path: "/login",
+    name: "xxx",
+    component: () => import("@/views/about"),
   },
-  componentLibrary,
-  generateRoutes(),
-  generateCommonRoutes({
-    mdFiles,
-    basePath: "/list1",
-    name: "面试题1",
-  }),
+  generateCommonRoutes(componentLibrary),
+  generateCommonRoutes(interviewRouteConfig),
 ];
+
+// 设置路由的重定向地址
+const setRedirect = (route) => {
+  if (route?.children?.length) {
+    // 递归查找第一个没有子路由的路由路径
+    route.redirect = setRedirect(route.children[0]);
+  }
+  return route.path;
+};
+
+// 对生成的路由设置重定向
+routes.forEach((route) => {
+  if (route.children?.length) {
+    setRedirect(route);
+  }
+});
+
+// 动态获取第一个有效的重定向路径
+const getFirstRedirectPath = (routes) => {
+  for (const route of routes) {
+    if (route.redirect) {
+      return route.redirect; // 返回第一个有效的重定向路径
+    }
+    if (route.children?.length) {
+      const childRedirect = getFirstRedirectPath(route.children);
+      if (childRedirect) {
+        return childRedirect; // 递归查找子路由的重定向路径
+      }
+    }
+  }
+  return null; // 如果没有找到重定向路径，返回 null
+};
+
+// 设置根路由重定向
+const firstRedirectPath = getFirstRedirectPath(routes);
+if (firstRedirectPath) {
+  routes.push({
+    path: "/",
+    redirect: firstRedirectPath, // 动态设置根路由的重定向路径
+    hidden: true,
+  });
+} else {
+  // 如果没有找到有效的重定向路径，可以提供一个默认路径或抛出警告
+  console.warn("No valid redirect path found for root route.");
+  routes.push({
+    path: "/",
+    redirect: "/componentLibrary/empty", // 提供一个默认路径
+    hidden: true,
+  });
+}
+
 const router = new VueRouter({
   routes,
 });
