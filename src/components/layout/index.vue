@@ -85,7 +85,7 @@ $border_color_extra_light: #ebebeb; // 假设这个颜色值
 
   .el-aside {
     height: calc(100vh - $header_height_px);
-    width: $menu-width !important;
+    width: fit-content !important;
   }
 
   .el-main {

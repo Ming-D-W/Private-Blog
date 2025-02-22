@@ -65,6 +65,7 @@ $menu-width-px: 200px;
   color: #4e596a;
   background-color: $color-white;
   padding-left: 16px;
+  padding-right: 8px;
   vertical-align: middle;
   cursor: pointer;
 
