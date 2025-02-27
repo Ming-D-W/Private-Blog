@@ -1,5 +1,5 @@
 <template>
-  <div class="main markdown-body">
+  <div class="markdown-body">
     <router-view></router-view>
   </div>
 </template>
