@@ -2,7 +2,7 @@
   <div class="box-container">
     <div class="box" :style="{ borderColor: box1Color }"></div>
     <div class="box" :style="{ borderColor: box2Color }">
-      <div class="fixed">111</div>
+      <div class="fixed">1111</div>
     </div>
     <div class="box" :style="{ borderColor: box3Color }">
       <div class="absolute">22222</div>
