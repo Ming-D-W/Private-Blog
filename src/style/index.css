@@ -199,6 +199,12 @@ select {
   justify-content: space-between;
 }
 
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 .flex-center {
   display: flex;
   align-items: center;
@@ -663,6 +669,542 @@ select {
 
 .pl-16 {
   padding-left: 16px !important;
+}
+
+/*                        颜色变量                          */
+/* 字体 */
+.font-h1-regular {
+  font-size: 20px;
+  line-height: 28px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h1-medium {
+  font-size: 20px;
+  line-height: 28px;
+  font-family: PingFangSC-Medium !important;
+}
+
+.font-h2-regular {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h2-medium {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: PingFangSC-Medium !important;
+}
+
+.font-h3-regular {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h3-medium {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: PingFangSC-Medium !important;
+}
+
+.font-h4-regular {
+  font-size: 14px;
+  line-height: 24px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h4-medium {
+  font-size: 14px;
+  line-height: 24px;
+  font-family: PingFangSC-Medium !important;
+}
+
+.font-h5-regular {
+  font-size: 13px;
+  line-height: 22px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h5-medium {
+  font-size: 13px;
+  line-height: 22px;
+  font-family: PingFangSC-Medium !important;
+}
+
+.font-h6-regular {
+  font-size: 12px;
+  line-height: 20px;
+  font-family: PingFangSC-Regular !important;
+}
+
+.font-h6-medium {
+  font-size: 12px;
+  line-height: 20px;
+  font-family: PingFangSC-Medium !important;
+}
+
+/* 文本超出隐藏 */
+.line-ellipsis-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-ellipsis-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.line-ellipsis-4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.line-ellipsis {
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* 手势 */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* 文本对齐方式 */
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+/* 字体 */
+.yx-pingfang-semibold {
+  font-family: PingFangSC-Semibold !important;
+}
+
+.yx-pingfang-regular {
+  font-family: PingFangSC-Regular !important;
+}
+
+.yx-pingfang-Medium {
+  font-family: PingFangSC-Medium, PingFang SC;
+}
+
+.DIN {
+  font-family: DINAlternate-Bold !important;
+}
+
+.Barlow-Bold {
+  font-family: Barlow-Bold !important;
+}
+
+.Barlow-SemiBold {
+  font-family: Barlow-SemiBold !important;
+}
+
+.Barlow-Medium {
+  font-family: Barlow-Medium !important;
+}
+
+/* 边框 */
+.yx-border {
+  border: 1px solid #f0f1f5;
+}
+
+.yx-border-top {
+  border-top: 1px solid #f0f1f5;
+}
+
+.yx-border-right {
+  border-top: 1px solid #f0f1f5;
+}
+
+.yx-border-bottom {
+  border-bottom: 1px solid #f0f1f5;
+}
+
+.yx-border-left {
+  border-left: 1px solid #f0f1f5;
+}
+
+/* 定位 */
+.pos-rela {
+  position: relative !important;
+}
+
+.pos-abso {
+  position: absolute !important;
+}
+
+.pos-fix {
+  position: fixed !important;
+}
+
+.pos-fix-top {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.pos-fix-bottom {
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* 圆角 */
+.radius-2 {
+  border-radius: 2px;
+}
+
+.radius-4 {
+  border-radius: 4px;
+}
+
+.radius-6 {
+  border-radius: 6px;
+}
+
+.radius-8 {
+  border-radius: 8px;
+}
+
+.radius-10 {
+  border-radius: 10px;
+}
+
+.radius-12 {
+  border-radius: 12px;
+}
+
+.radius-14 {
+  border-radius: 14px;
+}
+
+.radius-16 {
+  border-radius: 16px;
+}
+
+.radius-18 {
+  border-radius: 18px;
+}
+
+.radius-20 {
+  border-radius: 20px;
+}
+
+.radius-22 {
+  border-radius: 22px;
+}
+
+.radius-24 {
+  border-radius: 24px;
+}
+
+.radius-50 {
+  border-radius: 50%;
+}
+
+/* 其他 */
+.status-icon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.status-icon.status-success {
+  background-color: #67c23a;
+}
+.status-icon.status-warning {
+  background-color: #ff7038;
+}
+.status-icon.status-error {
+  background-color: #FA2714;
+}
+
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+
+.main-content-padding {
+  box-sizing: border-box;
+  padding: 16px 16px 0 16px;
+}
+
+.redStar::before {
+  content: "*";
+  color: red;
+  font-size: 14px;
+}
+
+.yx-background {
+  background-color: #f7f8fa !important;
+}
+
+.yx-background-white {
+  background-color: #ffffff;
+}
+
+.form-flex.el-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-flex.el-form .el-form-item {
+  display: flex;
+  padding-right: 30px;
+}
+.form-flex.el-form .el-form-item.flex-end {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.yx-form-wrap .el-form .el-input,
+.yx-form-wrap .el-form .el-select,
+.yx-form-wrap .el-form .el-date-editor {
+  width: 240px;
+}
+.yx-form-wrap .scope-input {
+  display: flex;
+  align-items: center;
+}
+.yx-form-wrap .scope-input .el-input {
+  width: 105px;
+}
+.yx-form-wrap .scope-input .flag {
+  font-size: 14px;
+  color: #1d2129;
+  padding: 0 8px;
+}
+
+.width100 {
+  width: 100% !important;
+}
+
+a.link {
+  cursor: pointer;
+  color: #1d2129;
+}
+a.link:hover {
+  color: #7052ff;
+  text-decoration: underline;
+}
+a.link-no-underline {
+  cursor: pointer;
+  color: #1d2129;
+}
+a.link-no-underline:hover {
+  color: #7052ff;
+}
+
+.hover:hover {
+  color: #7052ff !important;
+}
+
+.tab-btn {
+  padding-bottom: 4px;
+  text-align: left;
+}
+
+.product_box,
+.user_info_box {
+  padding: 10px;
+  background-color: #f7f8fa;
+  border-radius: 2px;
+}
+
+.pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.nowrap {
+  white-space: nowrap !important;
+}
+
+.role-label {
+  height: 18px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 0 2px;
+  color: #7052ff;
+  width: auto;
+  background-color: rgba(112, 82, 255, 0.1);
+}
+
+/* 字号 */
+.fz-12 {
+  font-size: 12px !important;
+}
+
+.fz-13 {
+  font-size: 13px !important;
+}
+
+.fz-14 {
+  font-size: 14px !important;
+}
+
+.fz-16 {
+  font-size: 16px !important;
+}
+
+.fz-18 {
+  font-size: 18px !important;
+}
+
+.fz-20 {
+  font-size: 20px !important;
+}
+
+.fz-24 {
+  font-size: 24px !important;
+}
+
+.fz-26 {
+  font-size: 26px !important;
+}
+
+.fz-28 {
+  font-size: 28px !important;
+}
+
+.fz-36 {
+  font-size: 36px !important;
+}
+
+/* 其他样式 */
+.el-checkbox__inner {
+  border: 1px solid #e2e3e8 !important;
+}
+
+.table-row {
+  font-size: 14px;
+}
+
+.el-tabs--card > .el-tabs__header {
+  margin: 0;
+}
+
+.el-tooltip__popper {
+  max-width: 800px;
+}
+
+.dialog-content {
+  width: 100%;
+  max-height: 625px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.gray-bg {
+  background-color: #f0f1f5;
+}
+
+.white-bg {
+  background-color: #fff;
+}
+
+.special-pwd input {
+  color: red;
+  font-family: "text-security-disc";
+  -webkit-text-security: disc;
+}
+
+.table-small thead .cell {
+  font-size: 12px !important;
+  color: #86909d !important;
+}
+.table-small thead th {
+  font-weight: 400 !important;
+}
+.table-small .cell {
+  font-size: 12px;
+  color: #1d2129;
+}
+
+.drawer-template .el-drawer__body {
+  padding: 24px 24px 53px !important;
+}
+.drawer-template .el-drawer__body::-webkit-scrollbar {
+  width: 6px;
+}
+.drawer-template .el-drawer__body::-webkit-scrollbar-thumb {
+  height: 26px;
+  border-radius: 3px;
+  background-color: #f0f1f5;
+}
+.drawer-template .drawer-footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #f0f1f5;
+  background-color: #fff;
+  z-index: 5;
+}
+
+.comingSoon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.comingSoon .panel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.comingSoon .emptySPBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=index.css.map */

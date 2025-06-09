@@ -4,17 +4,26 @@ import VueRouter from "vue-router";
 import { interviewRouteConfig } from "@/router/interviewQuestion";
 import { generateCommonRoutes } from "@/plugins/routingRuleTool";
 import { componentLibrary } from "@/router/componentLibrary";
+import Layout from "@/components/layout/index.vue";
 Vue.use(VueRouter);
 const routes = [
   {
     path: "/login",
-    name: "xxx",
-    component: () => import("@/views/about"),
+    name: "简历",
+    component: Layout,
+    children: [
+      {
+        path: "/login/jianli",
+        name: "吴万明",
+        component: () => import("@/views/about"),
+      },
+    ],
   },
   generateCommonRoutes(componentLibrary),
   generateCommonRoutes(interviewRouteConfig),
 ];
-
+console.log(routes[0].children, "routes");
+console.log(routes[1].children, "routes");
 // 设置路由的重定向地址
 const setRedirect = (route) => {
   if (route?.children?.length) {
