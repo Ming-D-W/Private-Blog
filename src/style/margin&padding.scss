@@ -2,77 +2,77 @@ $MPCenterNumber: 12;
 $MPMaxNumb: 32;
 
 @mixin mpsmall($n) {
-	@if $n > 0 {
-		.m-#{$n} {
-			margin: #{$n}px !important;
-		}
-		.mt-#{$n} {
-			margin-top: #{$n}px !important;
-		}
-		.mr-#{$n} {
-			margin-right: #{$n}px !important;
-		}
-		.mb-#{$n} {
-			margin-bottom: #{$n}px !important;
-		}
-		.ml-#{$n} {
-			margin-left: #{$n}px !important;
-		}
-		.p-#{$n} {
-			padding: #{$n}px !important;
-		}
-		.pt-#{$n} {
-			padding-top: #{$n}px !important;
-		}
-		.pr-#{$n} {
-			padding-right: #{$n}px !important;
-		}
-		.pb-#{$n} {
-			padding-bottom: #{$n}px !important;
-		}
-		.pl-#{$n} {
-			padding-left: #{$n}px !important;
-		}
-		@include mpsmall($n - 2);
-	}
+  @if $n > 0 {
+    .m-#{$n} {
+      margin: #{$n}px !important;
+    }
+    .mt-#{$n} {
+      margin-top: #{$n}px !important;
+    }
+    .mr-#{$n} {
+      margin-right: #{$n}px !important;
+    }
+    .mb-#{$n} {
+      margin-bottom: #{$n}px !important;
+    }
+    .ml-#{$n} {
+      margin-left: #{$n}px !important;
+    }
+    .p-#{$n} {
+      padding: #{$n}px !important;
+    }
+    .pt-#{$n} {
+      padding-top: #{$n}px !important;
+    }
+    .pr-#{$n} {
+      padding-right: #{$n}px !important;
+    }
+    .pb-#{$n} {
+      padding-bottom: #{$n}px !important;
+    }
+    .pl-#{$n} {
+      padding-left: #{$n}px !important;
+    }
+    @include mpsmall($n - 2);
+  }
 }
 
 @include mpsmall($MPCenterNumber);
 
 @mixin mplarge($n) {
-	@if $n > $MPCenterNumber {
-		.m-#{$n} {
-			margin: #{$n}px !important;
-		}
-		.mt-#{$n} {
-			margin-top: #{$n}px !important;
-		}
-		.mr-#{$n} {
-			margin-right: #{$n}px !important;
-		}
-		.mb-#{$n} {
-			margin-bottom: #{$n}px !important;
-		}
-		.ml-#{$n} {
-			margin-left: #{$n}px !important;
-		}
-		.p-#{$n} {
-			padding: #{$n}px !important;
-		}
-		.pt-#{$n} {
-			padding-top: #{$n}px !important;
-		}
-		.pr-#{$n} {
-			padding-right: #{$n}px !important;
-		}
-		.pb-#{$n} {
-			padding-bottom: #{$n}px !important;
-		}
-		.pl-#{$n} {
-			padding-left: #{$n}px !important;
-		}
-		@include mplarge($n - 4);
-	}
+  @if $n > $MPCenterNumber {
+    .m-#{$n} {
+      margin: #{$n}px !important;
+    }
+    .mt-#{$n} {
+      margin-top: #{$n}px !important;
+    }
+    .mr-#{$n} {
+      margin-right: #{$n}px !important;
+    }
+    .mb-#{$n} {
+      margin-bottom: #{$n}px !important;
+    }
+    .ml-#{$n} {
+      margin-left: #{$n}px !important;
+    }
+    .p-#{$n} {
+      padding: #{$n}px !important;
+    }
+    .pt-#{$n} {
+      padding-top: #{$n}px !important;
+    }
+    .pr-#{$n} {
+      padding-right: #{$n}px !important;
+    }
+    .pb-#{$n} {
+      padding-bottom: #{$n}px !important;
+    }
+    .pl-#{$n} {
+      padding-left: #{$n}px !important;
+    }
+    @include mplarge($n - 4);
+  }
 }
 
 @include mplarge($MPMaxNumb);

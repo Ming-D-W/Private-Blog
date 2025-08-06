@@ -96,19 +96,19 @@ select {
   border: 1px solid #e0e0e0 !important;
 }
 
-.el-tooltip__popper.is-light[x-placement^=top] .popper__arrow {
+.el-tooltip__popper.is-light[x-placement^="top"] .popper__arrow {
   border-top-color: #e0e0e0 !important;
 }
 
-.el-tooltip__popper.is-light[x-placement^=left] .popper__arrow {
+.el-tooltip__popper.is-light[x-placement^="left"] .popper__arrow {
   border-left-color: #e0e0e0 !important;
 }
 
-.el-tooltip__popper.is-light[x-placement^=bottom] .popper__arrow {
+.el-tooltip__popper.is-light[x-placement^="bottom"] .popper__arrow {
   border-bottom-color: #e0e0e0 !important;
 }
 
-.el-tooltip__popper.is-light[x-placement^=right] .popper__arrow {
+.el-tooltip__popper.is-light[x-placement^="right"] .popper__arrow {
   border-right-color: #e0e0e0 !important;
 }
 
@@ -951,7 +951,7 @@ select {
   background-color: #ff7038;
 }
 .status-icon.status-error {
-  background-color: #FA2714;
+  background-color: #fa2714;
 }
 
 .clearfix {

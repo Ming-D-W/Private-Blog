@@ -9,12 +9,17 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/login",
-    name: "简历",
+    name: "demo",
     component: Layout,
     children: [
       {
         path: "/login/jianli",
-        name: "吴万明",
+        name: "简历",
+        component: () => import("@/views/about"),
+      },
+      {
+        path: "/login/jianli1",
+        name: "简历1",
         component: () => import("@/views/about"),
       },
     ],

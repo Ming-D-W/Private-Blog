@@ -35,7 +35,7 @@ export default {
 .sticky {
   position: -webkit-sticky; /* Safari */
   position: sticky;
-  top: 0;
+  top: -16px;
   background-color: #343a40;
   color: white;
   font-size: 18px;
