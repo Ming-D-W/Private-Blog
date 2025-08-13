@@ -1,6 +1,6 @@
 @function fadeout($color, $amount) {
-  $alpha: 1 - ($amount / 100); // 计算目标透明度
-  @return rgba(red($color), green($color), blue($color), $alpha);
+	$alpha: 1 - ($amount / 100); // 计算目标透明度
+	@return rgba(red($color), green($color), blue($color), $alpha);
 }
 
 // 主题色值变量

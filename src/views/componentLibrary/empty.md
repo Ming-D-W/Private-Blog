@@ -11,14 +11,14 @@
 ```html
 <template> </template>
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    components: {},
-    computed: {},
-    methods: {},
-  };
+	export default {
+		data() {
+			return {};
+		},
+		components: {},
+		computed: {},
+		methods: {},
+	};
 </script>
 ```
 
@@ -32,23 +32,21 @@
 
 ```html
 <template>
-  <empty>
-    <p slot="desc" class="yx-color-text-placeholder fz-12">
-      暂无数据，敬请期待
-    </p>
-  </empty>
+	<empty>
+		<p slot="desc" class="yx-color-text-placeholder fz-12">暂无数据，敬请期待</p>
+	</empty>
 </template>
 <script>
-  import Empty from "@/components/ui/empty";
+	import Empty from '@/components/ui/empty';
 
-  export default {
-    data() {
-      return {};
-    },
-    components: { Empty },
-    computed: {},
-    methods: {},
-  };
+	export default {
+		data() {
+			return {};
+		},
+		components: { Empty },
+		computed: {},
+		methods: {},
+	};
 </script>
 ```
 
@@ -63,14 +61,14 @@
 ```html
 <template> </template>
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    components: {},
-    computed: {},
-    methods: {},
-  };
+	export default {
+		data() {
+			return {};
+		},
+		components: {},
+		computed: {},
+		methods: {},
+	};
 </script>
 ```
 
@@ -85,14 +83,14 @@
 ```html
 <template> </template>
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    components: {},
-    computed: {},
-    methods: {},
-  };
+	export default {
+		data() {
+			return {};
+		},
+		components: {},
+		computed: {},
+		methods: {},
+	};
 </script>
 ```
 

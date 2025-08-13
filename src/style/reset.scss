@@ -1,6 +1,6 @@
 html,
 body {
-  height: 100%;
+	height: 100%;
 }
 html,
 body,
@@ -30,90 +30,90 @@ td,
 u,
 b,
 i {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-style: normal;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-style: normal;
 }
 
 :focus {
-  outline: 0;
+	outline: 0;
 }
 
 ol,
 ul {
-  list-style: none;
+	list-style: none;
 }
 
 input,
 textarea,
 select {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
 }
 
 input,
 textarea {
-  color: #2475ff !important; // 光标颜色
-  text-shadow: 0 0 0 #1d2129; // 文本颜色
-  -webkit-text-fill-color: transparent; // 隐藏原本文字
+	color: #2475ff !important; // 光标颜色
+	text-shadow: 0 0 0 #1d2129; // 文本颜色
+	-webkit-text-fill-color: transparent; // 隐藏原本文字
 }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #86909d; // 改变placeholder文本颜色
-  text-shadow: none;
-  -webkit-text-fill-color: initial;
+	color: #86909d; // 改变placeholder文本颜色
+	text-shadow: none;
+	-webkit-text-fill-color: initial;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 ul {
-  zoom: 1;
-  *zoom: 1;
-  _zoom: 1;
-  list-style: none;
+	zoom: 1;
+	*zoom: 1;
+	_zoom: 1;
+	list-style: none;
 }
 img {
-  border: 0px;
-  max-width: 100%;
-  vertical-align: middle;
+	border: 0px;
+	max-width: 100%;
+	vertical-align: middle;
 }
 select {
-  font-family: Trebuchet MS;
+	font-family: Trebuchet MS;
 } /*select垂直居中*/
 .el-tooltip__popper.is-light {
-  box-shadow: 0px 2px 8px 0px rgba(200, 201, 204, 0.5) !important;
-  border: 1px solid #e0e0e0 !important;
+	box-shadow: 0px 2px 8px 0px rgba(200, 201, 204, 0.5) !important;
+	border: 1px solid #e0e0e0 !important;
 }
-.el-tooltip__popper.is-light[x-placement^="top"] .popper__arrow {
-  border-top-color: #e0e0e0 !important;
+.el-tooltip__popper.is-light[x-placement^='top'] .popper__arrow {
+	border-top-color: #e0e0e0 !important;
 }
-.el-tooltip__popper.is-light[x-placement^="left"] .popper__arrow {
-  border-left-color: #e0e0e0 !important;
+.el-tooltip__popper.is-light[x-placement^='left'] .popper__arrow {
+	border-left-color: #e0e0e0 !important;
 }
-.el-tooltip__popper.is-light[x-placement^="bottom"] .popper__arrow {
-  border-bottom-color: #e0e0e0 !important;
+.el-tooltip__popper.is-light[x-placement^='bottom'] .popper__arrow {
+	border-bottom-color: #e0e0e0 !important;
 }
-.el-tooltip__popper.is-light[x-placement^="right"] .popper__arrow {
-  border-right-color: #e0e0e0 !important;
+.el-tooltip__popper.is-light[x-placement^='right'] .popper__arrow {
+	border-right-color: #e0e0e0 !important;
 }
 // .el-table--small td, .el-table--small th {
 //   padding: 11px 0!important;
 // }
 .el-dialog__wrapper .el-dialog__header {
-  border-bottom: 1px solid #eaebf0;
-  padding-bottom: 20px;
+	border-bottom: 1px solid #eaebf0;
+	padding-bottom: 20px;
 }
 .el-dialog__title {
-  font-size: 16px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #1d2129;
+	font-size: 16px;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #1d2129;
 }
 .el-dialog__body {
-  padding: 16px !important;
+	padding: 16px !important;
 }
