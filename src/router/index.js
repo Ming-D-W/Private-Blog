@@ -1,11 +1,9 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { interviewRouteConfig } from '@/router/interviewQuestion';
 import { generateCommonRoutes } from '@/plugins/routingRuleTool';
 import { componentLibrary } from '@/router/componentLibrary';
 import Layout from '@/components/layout/index.vue';
-Vue.use(VueRouter);
 const routes = [
 	{
 		path: '/login',
@@ -79,7 +77,8 @@ if (firstRedirectPath) {
 	});
 }
 
-const router = new VueRouter({
+const router = createRouter({
+	history: createWebHashHistory(),
 	routes,
 });
 export default router;
