@@ -42,7 +42,7 @@ export default {
 	width: 400px;
 	background-color: #00a982;
 	margin-top: 20px;
-	//border: 2px solid;
+	/*border: 2px solid;*/
 }
 .c {
 	height: 200px;
@@ -52,3 +52,4 @@ export default {
 	background-color: #000000;
 }
 </style>
+7AQ6BMCMCCNDG674SGY4NAWDXGAXRZO838C0GJ7RVDKZO8NU

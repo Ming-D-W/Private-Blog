@@ -6,6 +6,7 @@
 				<el-button @click="btn">11</el-button>
 				<el-button @click="btn2">22</el-button>
 				<el-button @click="testInfoModal">测试Info模态框</el-button>
+				<el-button @click="btn3">33</el-button>
 			</div>
 		</div>
 		<div class="f ml-20">
