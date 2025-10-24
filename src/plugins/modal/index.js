@@ -6,11 +6,11 @@
  * @LastEditors: Li Yong
  * @LastEditTime: 2023-09-04 11:49:39
  */
-import Vue from 'vue';
 import MsgModal from './msg';
 import TextareaModal from './textarea';
 const Modal = function (options) {
-	if (Vue.prototype.$isServer) return;
+	// Vue 3 中没有 $isServer，在浏览器环境中直接跳过检查
+	if (typeof window === 'undefined') return;
 	const { type = 'info' } = options;
 	const modals = {
 		info: MsgModal,

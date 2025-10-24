@@ -13,12 +13,12 @@ const routes = [
 			{
 				path: '/login/jianli',
 				name: '简历',
-				component: () => import('@/views/about'),
+				component: () => import('@/views/about/index.vue'),
 			},
 			{
 				path: '/login/jianli1',
 				name: '简历1',
-				component: () => import('@/views/about'),
+				component: () => import('@/views/about/index.vue'),
 			},
 		],
 	},
