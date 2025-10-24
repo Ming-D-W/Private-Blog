@@ -1,6 +1,6 @@
 <template>
 	<el-dialog
-		:visible.sync="visible"
+		v-model="visible"
 		:title="options.title"
 		:width="sizeWidths[options.size]"
 		@close="doClose"
@@ -62,6 +62,14 @@ export default {
 				],
 			}),
 		},
+		onAction: {
+			type: Function,
+			default: null,
+		},
+		onClose: {
+			type: Function,
+			default: null,
+		},
 	},
 	data() {
 		return {
@@ -81,11 +89,17 @@ export default {
 		doClose() {
 			this.visible = false;
 			this.action = '';
-			this.$emit('close');
+			// 调用 prop 函数而不是 emit
+			if (this.onClose) {
+				this.onClose();
+			}
 		},
 		handleClose(e, key) {
 			this.action = key;
-			this.$emit('action', { key: this.action, done: this.getSafeClose() });
+			// 调用 prop 函数而不是 emit
+			if (this.onAction) {
+				this.onAction({ key: this.action, done: this.getSafeClose() });
+			}
 		},
 		getSafeClose() {
 			return () => {

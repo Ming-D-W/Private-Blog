@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import { Dialog, Input } from 'element-ui';
+import { createApp } from 'vue';
+import { ElDialog, ElInput } from 'element-plus';
 import { debounce } from 'lodash';
 
 let custOptions, instance, resolve, reject;
@@ -23,7 +23,7 @@ let sizeWidths = {
 const initInstance = () => {
 	const dom = document.createElement('div');
 	document.body.appendChild(dom);
-	instance = new Vue({
+	const app = createApp({
 		el: dom,
 		data() {
 			return {
@@ -41,8 +41,8 @@ const initInstance = () => {
 			},
 		},
 		components: {
-			Dialog: Dialog,
-			Input: Input,
+			ElDialog,
+			ElInput,
 		},
 		render(h) {
 			const {
@@ -83,7 +83,7 @@ const initInstance = () => {
 				? h('div', { class: 'pt-8 pr-8 pl-8' }, [
 						h('div', { class: 'flex-row flex-align-start' }, [
 							labelNode,
-							h('Input', {
+							h(ElInput, {
 								class: 'flex-1',
 								attrs: { maxlength, placeholder, rows: 4 },
 								props: { type: 'textarea', value: this.text, showWordLimit },
@@ -94,7 +94,7 @@ const initInstance = () => {
 				: null;
 			const footerNode = this.showModal ? h('span', { slot: 'footer' }, [...btns]) : null;
 			return h(
-				'Dialog',
+				ElDialog,
 				{
 					props: {
 						visible: this.showModal,
@@ -135,18 +135,17 @@ const initInstance = () => {
 			}, 300),
 		},
 	});
+	instance = app.mount(dom);
 };
 const showMsg = () => {
 	if (!instance) {
 		initInstance();
 	}
-	Vue.nextTick(() => {
-		// 重设当前的options，否则会参数无法更新
-		instance.options = Object.assign({}, defaults, custOptions);
-		instance.showModal = true;
-		// 设置初始text的值
-		instance.text = custOptions.value;
-	});
+	// 重设当前的options，否则会参数无法更新
+	instance.options = Object.assign({}, defaults, custOptions);
+	instance.showModal = true;
+	// 设置初始text的值
+	instance.text = custOptions.value;
 };
 
 export default {

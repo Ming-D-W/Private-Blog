@@ -7,10 +7,10 @@
  * @LastEditTime: 2023-11-13 10:45:30
  */
 
-import Vue from 'vue';
+import { createApp } from 'vue';
 import MsgModal from './MsgModal.vue';
 
-let instance, resolve, reject;
+let instance, app, resolve, reject;
 let defaults = {
 	title: '提示',
 	contentTitle: '',
@@ -31,22 +31,20 @@ let defaults = {
 };
 
 const initInstance = () => {
-	const MsgModalConstructor = Vue.extend(MsgModal);
-	instance = new MsgModalConstructor({
-		el: document.createElement('div'),
+	const container = document.createElement('div');
+	document.body.appendChild(container);
+
+	app = createApp(MsgModal, {
+		options: defaults,
+		onAction: result => {
+			resolve(result);
+		},
+		onClose: () => {
+			reject();
+		},
 	});
 
-	// 监听组件事件
-	instance.$on('action', result => {
-		resolve(result);
-	});
-
-	instance.$on('close', () => {
-		reject();
-	});
-
-	// 将组件添加到 body
-	document.body.appendChild(instance.$el);
+	instance = app.mount(container);
 };
 
 const showMsg = options => {
@@ -56,12 +54,13 @@ const showMsg = options => {
 
 	// 合并配置选项
 	const mergedOptions = Object.assign({}, defaults, options);
-	instance.options = mergedOptions;
+	// 更新组件的 props
+	if (instance.$props) {
+		instance.$props.options = mergedOptions;
+	}
 
 	// 显示模态框
-	Vue.nextTick(() => {
-		instance.show();
-	});
+	instance.show();
 };
 
 export default {
