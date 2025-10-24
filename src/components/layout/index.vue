@@ -75,7 +75,7 @@ $border_color_extra_light: #ebebeb; // 假设这个颜色值
 	height: calc(100vh - $header_height_px);
 }
 
-::v-deep .el-container {
+:deep(.el-container) {
 	.el-header {
 		padding: 0;
 		min-width: $page_min_width_px;
