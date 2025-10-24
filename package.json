@@ -34,8 +34,8 @@
     "highlight.js": "^11.11.1",
     "prettier": "^2.4.1",
     "sass": "^1.93.2",
+    "unplugin-vue-markdown": "^0.26.3",
     "vite": "^4.5.14",
-    "vite-plugin-md": "^0.22.5",
     "vue-loader": "^17.4.2"
   }
 }
