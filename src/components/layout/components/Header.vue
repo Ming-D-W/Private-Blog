@@ -40,7 +40,6 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.$route.matched.map(item => item.path));
 		this.setSubMenuList(this.$route.matched.map(item => item.path));
 	},
 	methods: {

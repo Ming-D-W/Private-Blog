@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
 import ElementPlus from 'element-plus';
 import '@/style/index.scss';
 import 'element-plus/dist/index.css';
@@ -10,13 +9,14 @@ import '@/style/markdown-vue-theme.scss';
 import '@/style/highlight-typora-onedark.css';
 import plugins from './plugins';
 import { createHead } from '@unhead/vue/client';
+// 初始化 highlight.js（运行时加载）
+import '@/utils/highlight.js';
 
 const app = createApp(App);
 const head = createHead();
 
 app.use(ElementPlus);
 app.use(router);
-app.use(store);
 app.use(plugins);
 app.use(head);
 

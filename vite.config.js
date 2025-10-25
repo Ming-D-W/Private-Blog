@@ -4,26 +4,9 @@ import vueMd from 'vite-vue-md';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import prefixSelector from 'postcss-prefix-selector';
-
-// 导入 highlight.js 核心和语言
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-import xml from 'highlight.js/lib/languages/xml';
-import css from 'highlight.js/lib/languages/css';
-import shell from 'highlight.js/lib/languages/shell';
+import hljs, { highlightCode } from './src/utils/highlight.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// 注册 highlight.js 语言
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('js', javascript);
-hljs.registerLanguage('xml', xml);
-hljs.registerLanguage('html', xml);
-hljs.registerLanguage('vue', xml);
-hljs.registerLanguage('css', css);
-hljs.registerLanguage('shell', shell);
-hljs.registerLanguage('bash', shell);
-hljs.registerLanguage('sh', shell);
 
 export default defineConfig({
 	plugins: [
@@ -45,17 +28,8 @@ export default defineConfig({
 					const code = token.content;
 					const lang = token.info.trim();
 
-					let highlighted;
-					if (lang && hljs.getLanguage(lang)) {
-						try {
-							highlighted = hljs.highlight(code, { language: lang }).value;
-						} catch (e) {
-							console.error('highlight.js error:', e);
-							highlighted = code;
-						}
-					} else {
-						highlighted = code;
-					}
+					// 使用工具函数进行代码高亮
+					const highlighted = highlightCode(code, lang);
 
 					// 返回标准的 highlight.js HTML 结构
 					return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
@@ -66,14 +40,8 @@ export default defineConfig({
 				// 注册 DemoBlock 组件
 				this.registerComponent('DemoBlock', '@/components/demo-block/index.vue');
 
-				// 使用 highlight.js 高亮 demo 代码
-				let highlighted;
-				try {
-					highlighted = hljs.highlight(code, { language: 'html' }).value;
-				} catch (e) {
-					console.error('highlight.js error:', e);
-					highlighted = code;
-				}
+				// 使用工具函数高亮 demo 代码
+				const highlighted = highlightCode(code, 'html');
 
 				// 返回标准的 highlight.js HTML 结构
 				const highlightedHtml = `<pre><code class="hljs language-html">${highlighted}</code></pre>`;

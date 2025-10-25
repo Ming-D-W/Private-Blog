@@ -1,24 +1,105 @@
-# blog
+# 个人博客
 
-## Project setup
-```
+一个基于 Vue 3 + Vite 构建的个人博客系统，支持 Markdown 文档展示、组件库演示和面试题整理。
+
+## 技术栈
+
+- **框架**: Vue 3.5.22
+- **构建工具**: Vite 4.5.14
+- **UI 组件库**: Element Plus 2.11.5
+- **路由**: Vue Router 4.6.3
+- **Markdown 支持**: vite-vue-md 1.4.0
+- **代码高亮**: highlight.js 11.11.1
+- **样式**: SCSS + GitHub Markdown CSS
+- **其他**: axios, html2pdf.js, @unhead/vue
+
+## 功能特性
+
+- 📝 支持 Markdown 文档作为 Vue 组件渲染
+- 🎨 自定义 highlight.js 主题（基于 Typora OneDark 配色）
+- 📦 组件库展示与演示
+- 💼 面试题整理与展示
+- 🎯 动态路由生成
+- 📱 响应式布局
+
+## 项目设置
+
+### 安装依赖
+```bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+### 开发环境运行
+```bash
+npm run dev
 ```
 
-### Compiles and minifies for production
-```
+### 生产环境构建
+```bash
 npm run build
 ```
 
-### Lints and fixes files
+### 预览构建结果
+```bash
+npm run preview
 ```
+
+### 代码检查和修复
+```bash
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 代码格式化
+```bash
+# 格式化 src 目录下的文件
+npm run format
+
+# 检查格式化状态（不修改文件）
+npm run format:check
+
+# 格式化整个项目
+npm run format:all
+```
+
+## 项目结构
+
+```
+blog2/
+├── src/
+│   ├── components/        # 公共组件
+│   │   ├── demo-block/   # 代码演示块组件
+│   │   ├── layout/       # 布局组件
+│   │   └── ui/           # UI 组件
+│   ├── plugins/          # 插件
+│   ├── router/           # 路由配置
+│   ├── style/            # 全局样式
+│   ├── views/            # 页面视图
+│   │   ├── componentLibrary/  # 组件库
+│   │   └── interviewQuestion/ # 面试题
+│   ├── App.vue
+│   └── main.js
+├── public/               # 静态资源
+├── docs/                 # 文档
+├── vite.config.js        # Vite 配置
+└── package.json
+```
+
+## 配置说明
+
+### Vite 配置
+项目使用 Vite 作为构建工具，配置文件为 `vite.config.js`。主要配置包括：
+- Vue 插件支持 `.vue` 和 `.md` 文件
+- Markdown 文档转 Vue 组件
+- 代码高亮配置
+- PostCSS 样式前缀处理
+- 路径别名 `@` 指向 `src` 目录
+
+### 代码格式化
+项目使用 Prettier 进行代码格式化，配置文件为 `.prettierrc`。
+详细配置指南请参考 `docs/` 目录下的文档。
+
+## 更多信息
+
+- [Vite 官方文档](https://vitejs.dev/)
+- [Vue 3 官方文档](https://vuejs.org/)
+- [Element Plus 官方文档](https://element-plus.org/)

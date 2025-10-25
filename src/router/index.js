@@ -4,6 +4,7 @@ import { interviewRouteConfig } from '@/router/interviewQuestion';
 import { generateCommonRoutes } from '@/plugins/routingRuleTool';
 import { componentLibrary } from '@/router/componentLibrary';
 import Layout from '@/components/layout/index.vue';
+
 const routes = [
 	{
 		path: '/login',
@@ -25,13 +26,18 @@ const routes = [
 	generateCommonRoutes(componentLibrary),
 	generateCommonRoutes(interviewRouteConfig),
 ];
-console.log(routes[0].children, 'routes');
-console.log(routes[1].children, 'routes');
-// 设置路由的重定向地址
-const setRedirect = route => {
+
+/**
+ * 递归设置路由重定向并返回第一个叶子路由路径
+ * @param {Object} route - 路由对象
+ * @returns {string} 第一个叶子路由的路径
+ */
+const setRedirectAndGetFirstPath = route => {
 	if (route?.children?.length) {
 		// 递归查找第一个没有子路由的路由路径
-		route.redirect = setRedirect(route.children[0]);
+		const firstChildPath = setRedirectAndGetFirstPath(route.children[0]);
+		route.redirect = firstChildPath;
+		return firstChildPath;
 	}
 	return route.path;
 };
@@ -39,46 +45,23 @@ const setRedirect = route => {
 // 对生成的路由设置重定向
 routes.forEach(route => {
 	if (route.children?.length) {
-		setRedirect(route);
+		setRedirectAndGetFirstPath(route);
 	}
 });
 
-// 动态获取第一个有效的重定向路径
-const getFirstRedirectPath = routes => {
-	for (const route of routes) {
-		if (route.redirect) {
-			return route.redirect; // 返回第一个有效的重定向路径
-		}
-		if (route.children?.length) {
-			const childRedirect = getFirstRedirectPath(route.children);
-			if (childRedirect) {
-				return childRedirect; // 递归查找子路由的重定向路径
-			}
-		}
-	}
-	return null; // 如果没有找到重定向路径，返回 null
-};
+// 获取第一个有效的重定向路径作为根路由重定向
+const firstRedirectPath = routes.find(route => route.redirect)?.redirect;
 
 // 设置根路由重定向
-const firstRedirectPath = getFirstRedirectPath(routes);
-if (firstRedirectPath) {
-	routes.push({
-		path: '/',
-		redirect: firstRedirectPath, // 动态设置根路由的重定向路径
-		hidden: true,
-	});
-} else {
-	// 如果没有找到有效的重定向路径，可以提供一个默认路径或抛出警告
-	console.warn('No valid redirect path found for root route.');
-	routes.push({
-		path: '/',
-		redirect: '/componentLibrary/empty', // 提供一个默认路径
-		hidden: true,
-	});
-}
+routes.push({
+	path: '/',
+	redirect: firstRedirectPath || '/componentLibrary/empty', // 动态设置根路由的重定向路径
+	hidden: true,
+});
 
 const router = createRouter({
 	history: createWebHashHistory(),
 	routes,
 });
+
 export default router;
