@@ -1,10 +1,17 @@
 <template>
-	<aside v-if="headings.length > 0" class="toc-container" :class="{ 'mobile-drawer': isMobileDrawerOpen }">
+	<aside
+		v-if="shouldShowTOC && headings.length > 0"
+		class="toc-container"
+		:class="{ 'mobile-drawer': isMobileDrawerOpen }"
+	>
 		<!-- 移动端遮罩层 -->
 		<div v-if="isMobileDrawerOpen" class="toc-overlay" @click="closeMobileDrawer"></div>
 
 		<!-- TOC 内容 -->
-		<nav class="toc-nav">
+		<nav class="toc-nav" ref="tocNav">
+			<!-- 激活标记 -->
+			<div class="outline-marker" ref="marker"></div>
+
 			<div class="toc-header">
 				<span class="toc-title">目录</span>
 				<button v-if="isMobile" class="toc-close-btn" @click="closeMobileDrawer">
@@ -39,14 +46,27 @@ export default {
 		return {
 			headings: [],
 			activeId: '',
-			observer: null,
 			isMobile: false,
 			isMobileDrawerOpen: false,
+			scrollListener: null,
+			resizeListener: null,
+			cachedHeaderPositions: [],
 		};
+	},
+	computed: {
+		shouldShowTOC() {
+			// 根据路由 meta 判断是否显示 TOC
+			return this.$route.meta?.isMarkdown === true;
+		},
 	},
 	mounted() {
 		this.checkMobile();
-		window.addEventListener('resize', this.checkMobile);
+		this.resizeListener = this.throttle(() => {
+			this.checkMobile();
+			this.cacheHeaderPositions();
+		}, 200);
+		window.addEventListener('resize', this.resizeListener);
+
 		this.$nextTick(() => {
 			this.extractHeadings();
 			if (this.headings.length > 0) {
@@ -55,15 +75,21 @@ export default {
 		});
 	},
 	beforeUnmount() {
-		window.removeEventListener('resize', this.checkMobile);
-		if (this.observer) {
-			this.observer.disconnect();
+		if (this.resizeListener) {
+			window.removeEventListener('resize', this.resizeListener);
+		}
+		if (this.scrollListener) {
+			window.removeEventListener('scroll', this.scrollListener);
 		}
 	},
 	watch: {
 		'$route'() {
 			// 路由变化时重新提取标题
 			this.$nextTick(() => {
+				// 先移除旧的监听器
+				if (this.scrollListener) {
+					window.removeEventListener('scroll', this.scrollListener);
+				}
 				this.extractHeadings();
 				if (this.headings.length > 0) {
 					this.setupScrollSpy();
@@ -72,20 +98,93 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * 节流函数
+		 */
+		throttle(fn, delay) {
+			let timer = null;
+			return (...args) => {
+				if (timer) return;
+				timer = setTimeout(() => {
+					fn.apply(this, args);
+					timer = null;
+				}, delay);
+			};
+		},
+
+		/**
+		 * 计算元素的绝对位置
+		 */
+		getAbsoluteTop(element) {
+			let offsetTop = 0;
+			while (element && element !== document.body) {
+				if (element === null) {
+					return NaN;
+				}
+				offsetTop += element.offsetTop;
+				element = element.offsetParent;
+			}
+			return offsetTop;
+		},
+
+		/**
+		 * 提取标题文本(忽略锚点等辅助元素)
+		 */
+		serializeHeader(heading) {
+			let text = '';
+			for (const node of heading.childNodes) {
+				if (node.nodeType === 3) {
+					// 文本节点
+					text += node.textContent;
+				} else if (node.nodeType === 1) {
+					// 元素节点
+					const classList = node.classList || [];
+					// 忽略锚点和其他辅助元素
+					if (!classList.contains('header-anchor') && !classList.contains('ignore-header')) {
+						text += node.textContent;
+					}
+				}
+			}
+			return text.trim();
+		},
+
+		/**
+		 * 更新激活标记位置
+		 */
+		updateMarker() {
+			if (!this.$refs.marker || !this.$refs.tocNav) return;
+
+			requestAnimationFrame(() => {
+				const activeLink = this.$refs.tocNav.querySelector('.toc-item.active a');
+				if (activeLink) {
+					this.$refs.marker.style.top = activeLink.offsetTop + 6 + 'px';
+					this.$refs.marker.style.opacity = '1';
+				} else {
+					this.$refs.marker.style.opacity = '0';
+				}
+			});
+		},
+
 		checkMobile() {
 			this.isMobile = window.innerWidth < 768;
 			if (!this.isMobile) {
 				this.isMobileDrawerOpen = false;
 			}
 		},
+
 		openMobileDrawer() {
 			this.isMobileDrawerOpen = true;
 			document.body.style.overflow = 'hidden';
 		},
+
 		closeMobileDrawer() {
 			this.isMobileDrawerOpen = false;
 			document.body.style.overflow = '';
 		},
+
+		/**
+		 * 提取页面标题
+		 */
 		extractHeadings() {
 			const container = document.querySelector('.markdown-body');
 			if (!container) {
@@ -94,41 +193,87 @@ export default {
 			}
 
 			const headingElements = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
-			this.headings = Array.from(headingElements).map((heading) => ({
-				id: heading.id,
-				text: heading.textContent,
-				level: parseInt(heading.tagName.charAt(1)),
-				element: heading,
+			this.headings = Array.from(headingElements)
+				.filter((el) => el.id && el.hasChildNodes()) // 过滤无 ID 和空标题
+				.map((heading) => ({
+					id: heading.id,
+					text: this.serializeHeader(heading),
+					level: parseInt(heading.tagName.charAt(1)),
+					element: heading,
+				}));
+
+			// 提取后缓存位置
+			this.cacheHeaderPositions();
+		},
+
+		/**
+		 * 缓存标题位置
+		 */
+		cacheHeaderPositions() {
+			this.cachedHeaderPositions = this.headings.map((h) => ({
+				id: h.id,
+				top: this.getAbsoluteTop(h.element),
 			}));
 		},
+		/**
+		 * 设置滚动监听
+		 */
 		setupScrollSpy() {
-			// 断开之前的观察器
-			if (this.observer) {
-				this.observer.disconnect();
-			}
+			const navHeight = 80; // 导航栏高度
 
-			// 创建 IntersectionObserver
-			this.observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							this.activeId = entry.target.id;
-						}
-					});
-				},
-				{
-					rootMargin: '-80px 0px -80% 0px',
-					threshold: 0,
-				},
-			);
+			const onScroll = () => {
+				const scrollY = window.scrollY;
+				const innerHeight = window.innerHeight;
+				const offsetHeight = document.body.offsetHeight;
+				const isBottom = Math.abs(scrollY + innerHeight - offsetHeight) < 1;
 
-			// 观察所有标题元素
-			this.headings.forEach((h) => {
-				if (h.element) {
-					this.observer.observe(h.element);
+				// 使用缓存的位置信息
+				const headers = this.cachedHeaderPositions
+					.filter(({ top }) => !isNaN(top))
+					.sort((a, b) => a.top - b.top);
+
+				if (!headers.length) {
+					this.activeId = '';
+					this.updateMarker();
+					return;
 				}
-			});
+
+				// 页面顶部
+				if (scrollY < 1) {
+					this.activeId = '';
+					this.updateMarker();
+					return;
+				}
+
+				// 页面底部 - 高亮最后一个链接
+				if (isBottom) {
+					this.activeId = headers[headers.length - 1].id;
+					this.updateMarker();
+					return;
+				}
+
+				// 找到视口上方最近的标题
+				let activeId = '';
+				for (const { id, top } of headers) {
+					if (top > scrollY + navHeight + 4) {
+						break;
+					}
+					activeId = id;
+				}
+				this.activeId = activeId;
+				this.updateMarker();
+			};
+
+			// 使用节流函数
+			this.scrollListener = this.throttle(onScroll, 100);
+			window.addEventListener('scroll', this.scrollListener);
+
+			// 初始化时执行一次
+			requestAnimationFrame(onScroll);
 		},
+		/**
+		 * 处理锚点点击
+		 */
 		handleAnchorClick(event, id) {
 			event.preventDefault();
 			const element = document.getElementById(id);
@@ -142,6 +287,7 @@ export default {
 				window.history.pushState(null, '', `#${id}`);
 				// 更新激活状态
 				this.activeId = id;
+				this.updateMarker();
 				// 关闭移动端抽屉
 				if (this.isMobile) {
 					this.closeMobileDrawer();
@@ -170,10 +316,29 @@ export default {
 }
 
 .toc-nav {
+	position: relative;
 	background: #fff;
 	border-radius: 8px;
 	border: 1px solid #e4e7ed;
+	border-left: 1px solid #e4e7ed;
 	padding: 16px;
+	padding-left: 16px;
+}
+
+/* 激活标记 */
+.outline-marker {
+	position: absolute;
+	top: 32px;
+	left: -1px;
+	z-index: 0;
+	opacity: 0;
+	width: 2px;
+	border-radius: 2px;
+	height: 18px;
+	background-color: #409eff;
+	transition:
+		top 0.25s cubic-bezier(0, 1, 0.5, 1),
+		opacity 0.25s;
 }
 
 .toc-header {
@@ -221,8 +386,7 @@ export default {
 		color: #606266;
 		text-decoration: none;
 		font-size: 13px;
-		transition: all 0.2s;
-		border-left: 2px solid transparent;
+		transition: color 0.2s;
 		padding-left: 12px;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -236,7 +400,6 @@ export default {
 	&.active > a {
 		color: #409eff;
 		font-weight: 500;
-		border-left-color: #409eff;
 	}
 }
 
