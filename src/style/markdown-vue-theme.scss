@@ -11,6 +11,22 @@
 	--code-bg-color: #f8f8f8;
 	--code-border-color: #e7e7e7;
 	--code-text-color: #e96900;
+
+	/* Typora OneDark 主题颜色变量（用于代码高亮） */
+	--color4: #282c34;
+	--bg-color3: rgba(248, 248, 248);
+	--bg-color4: #282c34;
+	--bg-color5: rgb(29, 31, 35);
+	--code-red-color: hsl(355, 75%, 65%);
+	--code-yellow-color: hsl(39, 77%, 69%);
+	--code-cyan-color: hsl(187, 57%, 55%);
+	--code-blue-color: hsl(207, 92%, 66%);
+	--code-purple-color: hsl(286, 70%, 67%);
+	--code-orange-color: hsl(29, 64%, 61%);
+	--code-green-color: hsl(95, 48%, 62%);
+	--code-grey-color: hsl(220, 9%, 55%);
+	--code-select-bg-color: rgb(59, 68, 84);
+	--code-cursor-color: hsl(220, 100%, 66%);
 }
 
 html {
@@ -347,6 +363,69 @@ tt {
 	padding: 1px 2px;
 }
 
+/* 下标和上标 */
+.markdown-body sub,
+.markdown-body sup {
+	font-size: 0.75em;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+.markdown-body sup {
+	top: -0.5em;
+}
+
+.markdown-body sub {
+	bottom: -0.25em;
+}
+
+/* 缩写 */
+.markdown-body abbr {
+	border-bottom: 1px dotted #777;
+	cursor: help;
+}
+
+/* 键盘按键样式 */
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 0.85em;
+	line-height: 1;
+	color: #555;
+	vertical-align: middle;
+	background-color: #fcfcfc;
+	border: 1px solid #ccc;
+	border-bottom-color: #bbb;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #bbb;
+	font-family: var(--font-monospace);
+}
+
+/* 定义列表 */
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 1em;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 1em;
+	margin-bottom: 1em;
+}
+
+/* 任务列表样式 */
+.markdown-body input[type='checkbox'] {
+	margin-right: 0.5em;
+	vertical-align: middle;
+}
+
 /* ==================== 代码块样式（highlight.js）==================== */
 /* 代码块样式在 src/style/highlight-typora-onedark.css 中定义 */
 
@@ -403,6 +482,64 @@ tt {
 
 /* ==================== 其他样式 ==================== */
 
+/* 图片样式 */
+.markdown-body img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 1em auto;
+}
+
+/* 列表样式增强 */
+.markdown-body li {
+	margin: 0.2em 0;
+}
+
+.markdown-body li > p {
+	margin: 0.5em 0;
+}
+
+/* 引用块内的段落 */
+.markdown-body blockquote > :first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+	margin-bottom: 0;
+}
+
+/* 表格样式增强 */
+.markdown-body table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	overflow: auto;
+	display: block;
+}
+
+.markdown-body table thead {
+	background-color: #f2f2f2;
+}
+
+.markdown-body table tbody tr:hover {
+	background-color: #f5f5f5;
+}
+
+/* 水平分割线样式 */
+.markdown-body hr {
+	border: none;
+	border-top: 2px solid #e7e7e7;
+	margin: 2em 0;
+}
+
+/* 链接样式增强 */
+.markdown-body a:hover {
+	color: #359970;
+	text-decoration: underline;
+}
+
+/* 代码块样式由 highlight-typora-onedark.css 定义 */
+
 /* 响应式设计 - 平板端 */
 @media (max-width: 1024px) {
 	.markdown-body {
@@ -440,20 +577,3 @@ tt {
 		white-space: nowrap;
 	}
 }
-
-/* 打印样式 */
-@media print {
-	html {
-		font-size: 13px;
-	}
-
-	table,
-	pre {
-		page-break-inside: avoid;
-	}
-
-	pre {
-		word-wrap: break-word;
-	}
-}
-

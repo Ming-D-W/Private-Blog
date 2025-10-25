@@ -27,17 +27,35 @@ pre {
   margin-bottom: 15px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   overflow: auto;
+  position: relative; /* 为红绿灯定位 */
+  border: 1px solid #282c34;
+}
+
+/* 代码块装饰圆点（红、黄、绿） */
+pre::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 12px;
+  height: 12px;
+  background-color: #ff5f56;
+  border-radius: 50%;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+  z-index: 1;
 }
 
 pre code.hljs {
   display: block;
   overflow-x: auto;
-  padding: 1em;
-  background-color: var(--bg-color4);
+  padding: 28px 12px 12px 12px; /* 顶部留出空间给红绿灯 */
+  background-color: transparent; /* 透明背景，使用 pre 的背景 */
   color: var(--text-color1);
   font-family: "Fira Code", "Roboto Mono", monospace;
   font-size: 0.92rem;
   line-height: 1.6;
+  margin: 0;
+  border-radius: 0;
 }
 
 /* ==================== 语法高亮样式（基于 highlight.js 类名）==================== */
@@ -183,6 +201,26 @@ pre code.hljs {
 .language-shell .hljs-meta,
 .language-bash .hljs-meta {
   color: var(--code-grey-color) !important;
+}
+
+/* ==================== 代码块滚动条样式 ==================== */
+pre::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* ==================== 行号和其他装饰 ==================== */
