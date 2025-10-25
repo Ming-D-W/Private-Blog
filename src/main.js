@@ -8,12 +8,15 @@ import 'element-plus/dist/index.css';
 import 'github-markdown-css';
 import '@/style/vs.css';
 import plugins from './plugins';
+import { createHead } from '@unhead/vue/client';
 
 const app = createApp(App);
+const head = createHead();
 
 app.use(ElementPlus);
 app.use(router);
 app.use(store);
 app.use(plugins);
+app.use(head);
 
 app.mount('#app');

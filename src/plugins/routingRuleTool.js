@@ -8,17 +8,20 @@ import Layout from '@/components/layout/index.vue';
  * @returns {Object} 路由配置对象
  */
 export function generateCommonRoutes({ mdFiles, basePath, name }) {
-	console.log(Object.keys(mdFiles), 'mdFiles keys');
 	const routes = Object.entries(mdFiles).map(([filePath, importFn]) => {
 		// filePath 格式: '/src/views/componentLibrary/empty.md'
 		// 提取文件名部分
 		const fileName = filePath.split('/').pop(); // 'empty.md' 或 'index1.vue'
 		const routePath = fileName.replace(/\.md$/, '').replace(/\.vue$/, '');
-		// 去掉路径开头的数字和点,将路径中的斜杠 / 替换为连字符 -
-		const routeName = routePath.replace(/^\d+\./, '').replace(/\//g, '-');
+		// 去掉路径开头的数字和点,将路径中的斜杠 / 替换为连字符 -，将空格和特殊字符(&)替换为连字符
+		let routeName = routePath.replace(/^\d+\./, '').replace(/\//g, '-').replace(/[\s&]+/g, '-');
+
+		// 对中文字符进行 URL 编码，确保路由路径与浏览器 URL 一致
+		routeName = encodeURIComponent(routeName);
+
 		return {
 			path: `${basePath}/${routeName}`,
-			name: routeName,
+			name: decodeURIComponent(routeName), // name 使用解码后的值，方便调试
 			component: importFn, // importFn 已经是一个返回 Promise 的函数
 		};
 	});

@@ -1,5 +1,5 @@
-import { createApp } from 'vue';
-import { ElDialog, ElInput } from 'element-plus';
+import { createApp, h } from 'vue';
+import { ElDialog, ElInput, ElButton } from 'element-plus';
 import { debounce } from 'lodash';
 
 let custOptions, instance, resolve, reject;
@@ -35,16 +35,17 @@ const initInstance = () => {
 			};
 		},
 		computed: {
-			confirmBtnDisabled({ options, text, isNotEmpty }) {
-				const { validator, required } = options;
-				return validator ? !validator(text) : required ? !isNotEmpty(text) : false;
+			confirmBtnDisabled() {
+				const { validator, required } = this.options;
+				const isNotEmpty = val => !['', void 0, null, 'null'].includes(val);
+				return validator ? !validator(this.text) : required ? !isNotEmpty(this.text) : false;
 			},
 		},
 		components: {
 			ElDialog,
 			ElInput,
 		},
-		render(h) {
+		render() {
 			const {
 				required,
 				validator,
@@ -63,20 +64,22 @@ const initInstance = () => {
 				? h('div', { class: 'color-gy-8 mr-16' }, [redStarNode, label])
 				: null;
 			const confirmBtnNode = h(
-				'el-button',
+				ElButton,
 				{
-					props: { type: 'primary', disabled: this.confirmBtnDisabled, loading: this.btnLoading },
-					on: { click: e => this.confirm(e) },
+					type: 'primary',
+					disabled: this.confirmBtnDisabled,
+					loading: this.btnLoading,
+					onClick: e => this.confirm(e),
 				},
-				[confirmText],
+				() => confirmText,
 			);
 			const cancelBtnNode = h(
-				'el-button',
+				ElButton,
 				{
-					props: { type: 'default' },
-					on: { click: e => this.handleClose(e, 'cancel') },
+					type: 'default',
+					onClick: e => this.handleClose(e, 'cancel'),
 				},
-				[cancelText],
+				() => cancelText,
 			);
 			const btns = [cancelBtnNode, confirmBtnNode];
 			const contentNode = this.showModal
@@ -85,26 +88,31 @@ const initInstance = () => {
 							labelNode,
 							h(ElInput, {
 								class: 'flex-1',
-								attrs: { maxlength, placeholder, rows: 4 },
-								props: { type: 'textarea', value: this.text, showWordLimit },
-								on: { input: e => (this.text = e) },
+								maxlength,
+								placeholder,
+								rows: 4,
+								type: 'textarea',
+								modelValue: this.text,
+								showWordLimit,
+								'onUpdate:modelValue': e => (this.text = e),
 							}),
 						]),
 				  ])
 				: null;
-			const footerNode = this.showModal ? h('span', { slot: 'footer' }, [...btns]) : null;
 			return h(
 				ElDialog,
 				{
-					props: {
-						visible: this.showModal,
-						title,
-						width: sizeWidths[size],
-						closeOnClickModal: false,
-					},
-					on: { close: e => this.doClose(e) },
+					modelValue: this.showModal,
+					title,
+					width: sizeWidths[size],
+					closeOnClickModal: false,
+					'onUpdate:modelValue': val => (this.showModal = val),
+					onClose: e => this.doClose(e),
 				},
-				[contentNode, footerNode],
+				{
+					default: () => contentNode,
+					footer: () => (this.showModal ? h('span', {}, [...btns]) : null),
+				},
 			);
 		},
 		methods: {

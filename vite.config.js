@@ -13,6 +13,13 @@ export default defineConfig({
 			include: [/\.vue$/, /\.md$/], // 支持 .md 文件作为 Vue 组件
 		}),
 		Markdown({
+			headEnabled: true,
+			markdownItOptions: {
+				html: true,
+				linkify: true,
+				typographer: true,
+			},
+			wrapperClasses: 'markdown-body',
 			markdownItSetup(md) {
 				// 迁移原有的 markdownContainer 配置
 				md.use(MarkdownItContainer, 'demo', {
@@ -26,8 +33,18 @@ export default defineConfig({
 							let descriptionHTML = description ? md.render(description) : '';
 							let content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : '';
 
+							// HTML 转义函数
+							const escapeHtml = (str) => {
+								return str
+									.replace(/&/g, '&amp;')
+									.replace(/</g, '&lt;')
+									.replace(/>/g, '&gt;')
+									.replace(/"/g, '&quot;')
+									.replace(/'/g, '&#039;');
+							};
+
 							return `<demo-block>
-                <div class="source" slot="source">${content}</div>
+                <div class="source" slot="source">${escapeHtml(content)}</div>
                 ${descriptionHTML}
                 <div class="highlight" slot="highlight">`;
 						} else {
