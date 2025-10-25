@@ -35,6 +35,9 @@ export function generateCommonRoutes({ mdFiles, basePath, name }) {
 			path: `${basePath}/${routeName}`,
 			name: decodeURIComponent(routeName), // name 使用解码后的值，方便调试
 			component: component,
+			meta: {
+				isMarkdown: filePath.endsWith('.md'), // 标记是否为 Markdown 文件
+			},
 		};
 	});
 

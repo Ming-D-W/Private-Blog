@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import prefixSelector from 'postcss-prefix-selector';
 import hljs, { highlightCode } from './src/utils/highlight.js';
+import anchor from 'markdown-it-anchor';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,6 +23,19 @@ export default defineConfig({
 			wrapperClass: 'markdown-body', // 使用 GitHub 风格的 markdown-body 类名
 			// 配置 highlight.js for markdown-it
 			markdownItSetup(md) {
+				// 配置 markdown-it-anchor 插件，为标题自动生成 id
+				md.use(anchor, {
+					permalink: false, // 不生成永久链接图标
+					slugify: (s) =>
+						String(s)
+							.trim()
+							.toLowerCase()
+							.replace(/\s+/g, '-') // 空格替换为连字符
+							.replace(/[^\w\u4e00-\u9fa5-]/g, '') // 保留字母、数字、中文和连字符
+							.replace(/--+/g, '-') // 多个连字符替换为单个
+							.replace(/^-+|-+$/g, ''), // 移除首尾连字符
+				});
+
 				// 自定义 fence 规则以使用 highlight.js
 				md.renderer.rules.fence = (tokens, idx, options, env, self) => {
 					const token = tokens[idx];
