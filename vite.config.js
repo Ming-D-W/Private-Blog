@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import vueMd from 'vite-vue-md';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import prefixSelector from 'postcss-prefix-selector';
 
 // 导入 highlight.js 核心和语言
 import hljs from 'highlight.js/lib/core';
@@ -101,6 +102,54 @@ export default defineConfig({
 			scss: {
 				additionalData: `@import "@/style/theme-color.scss";`,
 			},
+		},
+		postcss: {
+			plugins: [
+				prefixSelector({
+					prefix: '.markdown-body',
+					transform(prefix, selector, prefixedSelector) {
+						// 排除 :root，保留 CSS 变量定义
+						if (selector.includes(':root')) {
+							return selector;
+						}
+
+						// 排除 @keyframes
+						if (selector.includes('@keyframes')) {
+							return selector;
+						}
+
+						// 已经包含 .markdown-body 的选择器，避免重复添加
+						if (selector.includes('.markdown-body')) {
+							return selector;
+						}
+
+						// html 选择器改为应用到 .markdown-body 本身
+						if (selector.trim() === 'html') {
+							return '.markdown-body';
+						}
+
+						// body 选择器改为应用到 .markdown-body 本身
+						if (selector.trim() === 'body') {
+							return '.markdown-body';
+						}
+
+						// body > * 改为 .markdown-body > *
+						if (selector.includes('body >')) {
+							return selector.replace(/body\s*>/g, '.markdown-body >');
+						}
+
+						// body 开头的选择器改为 .markdown-body
+						if (selector.startsWith('body ')) {
+							return selector.replace(/^body\s+/, '.markdown-body ');
+						}
+
+						// 其他选择器添加前缀
+						return prefixedSelector;
+					},
+					// 只处理 Markdown 相关的样式文件
+					includeFiles: [/markdown-vue-theme\.scss$/, /highlight-typora-onedark\.css$/],
+				}),
+			],
 		},
 	},
 	server: {
