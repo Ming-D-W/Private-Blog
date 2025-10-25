@@ -1,57 +1,92 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import Markdown from 'unplugin-vue-markdown/vite';
-import MarkdownItContainer from 'markdown-it-container';
+import vueMd from 'vite-vue-md';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// 导入 highlight.js 核心和语言
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import xml from 'highlight.js/lib/languages/xml';
+import css from 'highlight.js/lib/languages/css';
+import shell from 'highlight.js/lib/languages/shell';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// 注册 highlight.js 语言
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('js', javascript);
+hljs.registerLanguage('xml', xml);
+hljs.registerLanguage('html', xml);
+hljs.registerLanguage('vue', xml);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('shell', shell);
+hljs.registerLanguage('bash', shell);
+hljs.registerLanguage('sh', shell);
 
 export default defineConfig({
 	plugins: [
 		vue({
 			include: [/\.vue$/, /\.md$/], // 支持 .md 文件作为 Vue 组件
 		}),
-		Markdown({
-			headEnabled: true,
+		vueMd({
 			markdownItOptions: {
 				html: true,
 				linkify: true,
 				typographer: true,
 			},
-			wrapperClasses: 'markdown-body',
+			wrapperClass: 'markdown-body', // 使用 GitHub 风格的 markdown-body 类名
+			// 配置 highlight.js for markdown-it
 			markdownItSetup(md) {
-				// 迁移原有的 markdownContainer 配置
-				md.use(MarkdownItContainer, 'demo', {
-					validate: function (params) {
-						return params.trim().match(/^demo\s*(.*)$/);
-					},
-					render: function (tokens, idx) {
-						if (tokens[idx].nesting === 1) {
-							let demoInfo = tokens[idx].info.trim().match(/^demo\s+(.*)$/);
-							let description = demoInfo && demoInfo.length > 1 ? demoInfo[1] : '';
-							let descriptionHTML = description ? md.render(description) : '';
-							let content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : '';
+				// 自定义 fence 规则以使用 highlight.js
+				md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+					const token = tokens[idx];
+					const code = token.content;
+					const lang = token.info.trim();
 
-							// HTML 转义函数
-							const escapeHtml = (str) => {
-								return str
-									.replace(/&/g, '&amp;')
-									.replace(/</g, '&lt;')
-									.replace(/>/g, '&gt;')
-									.replace(/"/g, '&quot;')
-									.replace(/'/g, '&#039;');
-							};
-
-							return `<demo-block>
-                <div class="source" slot="source">${escapeHtml(content)}</div>
-                ${descriptionHTML}
-                <div class="highlight" slot="highlight">`;
-						} else {
-							return '</div></demo-block>\n';
+					let highlighted;
+					if (lang && hljs.getLanguage(lang)) {
+						try {
+							highlighted = hljs.highlight(code, { language: lang }).value;
+						} catch (e) {
+							console.error('highlight.js error:', e);
+							highlighted = code;
 						}
-					},
-				});
+					} else {
+						highlighted = code;
+					}
+
+					// 返回标准的 highlight.js HTML 结构
+					return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
+				};
+			},
+			// 配置 DemoBlock 的代码高亮
+			onDemo(componentTag, code) {
+				// 注册 DemoBlock 组件
+				this.registerComponent('DemoBlock', '@/components/demo-block/index.vue');
+
+				// 使用 highlight.js 高亮 demo 代码
+				let highlighted;
+				try {
+					highlighted = hljs.highlight(code, { language: 'html' }).value;
+				} catch (e) {
+					console.error('highlight.js error:', e);
+					highlighted = code;
+				}
+
+				// 返回标准的 highlight.js HTML 结构
+				const highlightedHtml = `<pre><code class="hljs language-html">${highlighted}</code></pre>`;
+
+				return `
+					<DemoBlock>
+						<template #source>
+							${componentTag}
+						</template>
+						<template #highlight>
+							${highlightedHtml}
+						</template>
+					</DemoBlock>
+				`;
 			},
 		}),
 	],
@@ -59,6 +94,7 @@ export default defineConfig({
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
 		},
+		extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
 	},
 	css: {
 		preprocessorOptions: {

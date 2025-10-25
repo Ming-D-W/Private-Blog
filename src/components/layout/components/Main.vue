@@ -1,16 +1,16 @@
 <template>
-	<div class="markdown-body">
+	<div id="write">
 		<router-view></router-view>
 	</div>
 </template>
 
 <script>
+// Shiki 在构建时完成高亮，无需客户端 JavaScript
 export default {
 	name: '',
 	data() {
 		return {};
 	},
-	methods: {},
 	computed: {},
 };
 </script>

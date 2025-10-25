@@ -6,38 +6,38 @@
 
 标签组的基础用法
 
-:::demo
-
-```html
-<template> </template>
+```vue demo
+<template>
+  <empty></empty>
+</template>
 <script>
-	export default {
-		data() {
-			return {};
-		},
-		components: {},
-		computed: {},
-		methods: {},
-	};
+  import Empty from '@/components/ui/empty/index.vue';
+
+  export default {
+    data() {
+      return {}
+    },
+    components: {Empty},
+    computed: {},
+    methods: {}
+  }
 </script>
 ```
-
-:::
 
 ### 文字插槽
 
 用于替换默认文字及样式
 
-:::demo
-
-```html
+```vue demo
 <template>
 	<empty>
-		<p slot="desc" class="yx-color-text-placeholder fz-12">暂无数据，敬请期待</p>
+		<template #desc>
+			<p class="yx-color-text-placeholder fz-12">暂无数据，敬请期待</p>
+		</template>
 	</empty>
 </template>
 <script>
-	import Empty from '@/components/ui/empty';
+	import Empty from '@/components/ui/empty/index.vue';
 
 	export default {
 		data() {
@@ -50,51 +50,53 @@
 </script>
 ```
 
-:::
-
 ### 图片插槽
 
 用于替换默认图片
 
-:::demo
-
-```html
-<template> </template>
+```vue demo
+<template>
+	<empty>
+		<template #image>
+			<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2UwZTBlMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE2IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+6Ieq5a6a5LmJ5Zu+54mHPC90ZXh0Pjwvc3ZnPg==" alt="" style="width: 120px;" />
+		</template>
+	</empty>
+</template>
 <script>
+	import Empty from '@/components/ui/empty/index.vue';
+
 	export default {
 		data() {
 			return {};
 		},
-		components: {},
+		components: { Empty },
 		computed: {},
 		methods: {},
 	};
 </script>
 ```
-
-:::
 
 ### 按钮
 
 展示按钮
 
-:::demo
-
-```html
-<template> </template>
+```vue demo
+<template>
+	<empty :btn-show="true" btn-text="跳转至XXX"></empty>
+</template>
 <script>
+	import Empty from '@/components/ui/empty/index.vue';
+
 	export default {
 		data() {
 			return {};
 		},
-		components: {},
+		components: { Empty },
 		computed: {},
 		methods: {},
 	};
 </script>
 ```
-
-:::
 
 ### Attributes
 

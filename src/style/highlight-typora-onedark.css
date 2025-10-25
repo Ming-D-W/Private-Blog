@@ -1,0 +1,202 @@
+/**
+ * highlight.js Typora OneDark 主题
+ * 基于 vue_副本.css 中的 CodeMirror 样式
+ * 100% 匹配 Typora OneDark 配色方案
+ */
+
+/* CSS 变量定义（与 Typora 完全一致） */
+:root {
+  --code-red-color: hsl(355, 75%, 65%);     /* #E06C75 - 标签 */
+  --code-yellow-color: hsl(39, 77%, 69%);   /* #E5C07B - 变量 */
+  --code-cyan-color: hsl(187, 57%, 55%);    /* #56B6C2 - 操作符、内置函数 */
+  --code-blue-color: hsl(207, 92%, 66%);    /* #61AFEF - 属性、定义 */
+  --code-purple-color: hsl(286, 70%, 67%);  /* #C678DD - 关键字 */
+  --code-orange-color: hsl(29, 64%, 61%);   /* #D19A66 - 数字、属性名 */
+  --code-green-color: hsl(95, 48%, 62%);    /* #98C379 - 字符串 */
+  --code-grey-color: hsl(220, 9%, 55%);     /* #7F848E - 注释 */
+  --bg-color4: #282C34;                     /* 代码块背景色 */
+  --text-color1: rgba(177, 180, 185);       /* 代码块文本颜色 */
+}
+
+/* ==================== 代码块容器样式 ==================== */
+pre {
+  background-color: var(--bg-color4);
+  border-radius: 6px;
+  padding: 8px 4px 8px 4px !important;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+}
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background-color: var(--bg-color4);
+  color: var(--text-color1);
+  font-family: "Fira Code", "Roboto Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ==================== 语法高亮样式（基于 highlight.js 类名）==================== */
+
+/* 关键字 (function, const, let, var, return, if, else, for, while, class, extends, etc.) - 紫色 */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-link {
+  color: var(--code-purple-color) !important;
+}
+
+/* 字符串 - 绿色 */
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: var(--code-green-color) !important;
+}
+
+/* 注释 - 灰色（斜体） */
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+  color: var(--code-grey-color) !important;
+  font-style: italic;
+}
+
+/* 数字 - 橙色 */
+.hljs-number {
+  color: var(--code-orange-color) !important;
+}
+
+/* 属性、定义 - 蓝色 */
+.hljs-property,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: var(--code-blue-color) !important;
+}
+
+/* 函数名、方法名 - 蓝色 */
+.hljs-function .hljs-title,
+.hljs-title.function_,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-params {
+  color: var(--code-blue-color) !important;
+}
+
+/* HTML/XML 标签 - 红色 */
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: var(--code-red-color) !important;
+}
+
+/* HTML/XML 属性名 - 橙色 */
+.hljs-attribute {
+  color: var(--code-orange-color) !important;
+}
+
+/* 操作符、内置函数 - 青色 */
+.hljs-operator,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--code-cyan-color) !important;
+}
+
+/* Meta、装饰器 - 红色 */
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-meta .hljs-string {
+  color: var(--code-red-color) !important;
+}
+
+/* 变量（普通文本） - 默认颜色 */
+.hljs-variable,
+.hljs-subst {
+  color: var(--text-color1) !important;
+}
+
+/* 强调 */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+/* 加粗 */
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* ==================== 特定语言的样式调整 ==================== */
+
+/* JavaScript/TypeScript */
+.language-javascript .hljs-built_in,
+.language-typescript .hljs-built_in,
+.language-js .hljs-built_in,
+.language-ts .hljs-built_in {
+  color: var(--code-cyan-color) !important;
+}
+
+/* CSS */
+.language-css .hljs-selector-tag {
+  color: var(--code-red-color) !important;
+}
+
+.language-css .hljs-selector-class,
+.language-css .hljs-selector-id {
+  color: var(--code-yellow-color) !important;
+}
+
+.language-css .hljs-attribute {
+  color: var(--code-blue-color) !important;
+}
+
+/* HTML/XML */
+.language-html .hljs-tag,
+.language-xml .hljs-tag {
+  color: var(--text-color1) !important;
+}
+
+.language-html .hljs-name,
+.language-xml .hljs-name {
+  color: var(--code-red-color) !important;
+}
+
+.language-html .hljs-attr,
+.language-xml .hljs-attr {
+  color: var(--code-orange-color) !important;
+}
+
+/* Shell/Bash */
+.language-shell .hljs-meta,
+.language-bash .hljs-meta {
+  color: var(--code-grey-color) !important;
+}
+
+/* ==================== 行号和其他装饰 ==================== */
+
+/* 如果使用了行号插件 */
+.hljs-ln-numbers {
+  text-align: right;
+  color: var(--code-grey-color);
+  border-right: 1px solid var(--code-grey-color);
+  padding-right: 10px;
+  margin-right: 10px;
+  user-select: none;
+}
+
+.hljs-ln-code {
+  padding-left: 10px;
+}

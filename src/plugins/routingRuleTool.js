@@ -19,10 +19,22 @@ export function generateCommonRoutes({ mdFiles, basePath, name }) {
 		// 对中文字符进行 URL 编码，确保路由路径与浏览器 URL 一致
 		routeName = encodeURIComponent(routeName);
 
+		// 处理 eager 和非 eager 导入的差异
+		// eager: true 时，importFn 是模块对象（包含 default 属性）
+		// eager: false 时，importFn 是返回 Promise 的函数
+		let component;
+		if (typeof importFn === 'function') {
+			// 懒加载模式（.md 文件）
+			component = importFn;
+		} else {
+			// 预加载模式（.vue 文件），importFn 是模块对象
+			component = () => Promise.resolve(importFn);
+		}
+
 		return {
 			path: `${basePath}/${routeName}`,
 			name: decodeURIComponent(routeName), // name 使用解码后的值，方便调试
-			component: importFn, // importFn 已经是一个返回 Promise 的函数
+			component: component,
 		};
 	});
 

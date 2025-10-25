@@ -5,8 +5,9 @@ import store from './store';
 import ElementPlus from 'element-plus';
 import '@/style/index.scss';
 import 'element-plus/dist/index.css';
-import 'github-markdown-css';
-import '@/style/vs.css';
+import '@/style/markdown-vue-theme.scss';
+// 引入自定义 highlight.js 主题（基于 Typora OneDark 配色）
+import '@/style/highlight-typora-onedark.css';
 import plugins from './plugins';
 import { createHead } from '@unhead/vue/client';
 
