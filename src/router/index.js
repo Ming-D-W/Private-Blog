@@ -6,25 +6,20 @@ import { componentLibrary } from '@/router/modules/component-library.routes';
 import Layout from '@/components/layout/index.vue';
 
 const routes = [
+	generateCommonRoutes(interviewRouteConfig),
+	generateCommonRoutes(componentLibrary),
 	{
-		path: '/login',
-		name: 'demo',
+		path: '/resume',
+		name: '简历',
 		component: Layout,
 		children: [
 			{
-				path: '/login/jianli',
-				name: '简历',
-				component: () => import('@/views/about/index.vue'),
-			},
-			{
-				path: '/login/jianli1',
+				path: '/resume/resume1',
 				name: '简历1',
-				component: () => import('@/views/about/index.vue'),
+				component: () => import('@/views/resume/index.vue'),
 			},
 		],
 	},
-	generateCommonRoutes(componentLibrary),
-	generateCommonRoutes(interviewRouteConfig),
 ];
 
 /**
