@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { interviewRouteConfig } from '@/router/interviewQuestion';
+import { interviewRouteConfig } from '@/router/modules/interview-question.routes';
 import { generateCommonRoutes } from '@/plugins/routingRuleTool';
-import { componentLibrary } from '@/router/componentLibrary';
+import { componentLibrary } from '@/router/modules/component-library.routes';
 import Layout from '@/components/layout/index.vue';
 
 const routes = [

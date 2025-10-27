@@ -2,11 +2,11 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import ElementPlus from 'element-plus';
-import '@/style/index.scss';
+import '@/styles/index.scss';
 import 'element-plus/dist/index.css';
-import '@/style/markdown-vue-theme.scss';
+import '@/styles/themes/markdown-vue-theme.scss';
 // 引入自定义 highlight.js 主题（基于 Typora OneDark 配色）
-import '@/style/highlight-typora-onedark.css';
+import '@/styles/themes/highlight-typora-onedark.css';
 import plugins from './plugins';
 import { createHead } from '@unhead/vue/client';
 // 初始化 highlight.js（运行时加载）

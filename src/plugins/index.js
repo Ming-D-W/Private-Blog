@@ -1,4 +1,4 @@
-import Modal from './modal';
+import Modal from '@/components/modal';
 import DemoBlock from '@/components/demo-block/index.vue';
 
 export default {

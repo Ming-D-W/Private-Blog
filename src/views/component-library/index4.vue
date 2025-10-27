@@ -6,6 +6,7 @@
 				<el-button @click="btn">11</el-button>
 				<el-button @click="btn2">22</el-button>
 				<el-button @click="testInfoModal">测试Info模态框</el-button>
+				<el-button type="success" @click="openComposableDialog">使用 Composable 打开对话框</el-button>
 			</div>
 		</div>
 		<div class="f ml-20">
@@ -13,7 +14,64 @@
 			<div class="c"></div>
 		</div>
 	</div>
+
+	<!-- 使用 Composable 的对话框 -->
+	<MsgModal
+		ref="composableDialogRef"
+		:options="dialog.config"
+		:on-action="handleDialogAction"
+		:on-close="dialog.close"
+	/>
 </template>
+
+<script setup>
+import { ref, nextTick } from 'vue';
+import { useDialog } from '@/composables/useDialog';
+import MsgModal from '@/components/modal/MsgModal.vue';
+import { ElMessage } from 'element-plus';
+
+// 使用 useDialog composable
+const dialog = useDialog({
+	title: 'Composable 对话框',
+	contentTitle: '这是使用 Composable 创建的对话框',
+	content: '通过 useDialog 组合式函数，我们可以更优雅地管理对话框的状态和配置。这种方式更符合 Vue 3 的 Composition API 设计理念。',
+	size: 'normal',
+	btns: [
+		{
+			type: 'default',
+			text: '取消',
+			key: 'cancel',
+		},
+		{
+			type: 'primary',
+			text: '确认',
+			key: 'confirm',
+		},
+	],
+});
+
+const composableDialogRef = ref(null);
+
+// 打开 composable 对话框
+const openComposableDialog = () => {
+	dialog.open();
+	nextTick(() => {
+		if (composableDialogRef.value) {
+			composableDialogRef.value.show();
+		}
+	});
+};
+
+// 处理对话框操作
+const handleDialogAction = (res) => {
+	if (res.key === 'confirm') {
+		ElMessage.success('确认成功！Composable 工作正常');
+	} else {
+		ElMessage.info('取消操作');
+	}
+	res.done();
+};
+</script>
 
 <script>
 export default {

@@ -82,7 +82,7 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: `@import "@/style/theme-color.scss";`,
+				additionalData: `@import "@/styles/themes/theme-color.scss";`,
 			},
 		},
 		postcss: {

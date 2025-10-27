@@ -66,21 +66,39 @@ npm run format:all
 ```
 blog2/
 ├── src/
-│   ├── components/        # 公共组件
-│   │   ├── demo-block/   # 代码演示块组件
-│   │   ├── layout/       # 布局组件
-│   │   └── ui/           # UI 组件
-│   ├── plugins/          # 插件
-│   ├── router/           # 路由配置
-│   ├── style/            # 全局样式
-│   ├── views/            # 页面视图
-│   │   ├── componentLibrary/  # 组件库
-│   │   └── interviewQuestion/ # 面试题
+│   ├── api/                    # API 请求管理
+│   ├── assets/                 # 静态资源
+│   │   ├── images/            # 图片资源
+│   │   └── fonts/             # 字体资源
+│   ├── components/             # 公共组件
+│   │   ├── demo-block/        # 代码演示块组件
+│   │   ├── layout/            # 布局组件
+│   │   ├── modal/             # 弹窗组件
+│   │   └── ui/                # UI 组件
+│   ├── composables/            # 组合式函数（Vue 3 Composition API）
+│   │   └── useDialog.js       # 对话框状态管理示例
+│   ├── constants/              # 常量配置
+│   ├── plugins/                # Vue 插件
+│   ├── router/                 # 路由配置
+│   │   ├── modules/           # 路由模块
+│   │   │   ├── component-library.routes.js
+│   │   │   └── interview-question.routes.js
+│   │   └── index.js
+│   ├── styles/                 # 全局样式
+│   │   ├── base/              # 基础样式
+│   │   ├── utils/             # 工具样式
+│   │   ├── themes/            # 主题样式
+│   │   └── index.scss
+│   ├── utils/                  # 工具函数
+│   ├── views/                  # 页面视图
+│   │   ├── about/             # 关于页面
+│   │   ├── component-library/ # 组件库展示
+│   │   └── interview-question/ # 面试题
 │   ├── App.vue
 │   └── main.js
-├── public/               # 静态资源
-├── docs/                 # 文档
-├── vite.config.js        # Vite 配置
+├── public/                     # 静态资源
+├── docs/                       # 文档
+├── vite.config.js              # Vite 配置
 └── package.json
 ```
 
