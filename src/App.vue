@@ -5,5 +5,5 @@
 </template>
 
 <style lang="scss">
-@use './styles/index.scss';
+/* 全局样式已在 main.js 中导入，此处无需重复导入 */
 </style>

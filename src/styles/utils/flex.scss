@@ -35,14 +35,6 @@ $flexJustLen: list.length($flexJustClassArr);
 	}
 }
 
-$ellipsisLineMax: 4;
-
-@for $index from 1 through $ellipsisLineMax {
-	.flex-#{$index} {
-		flex: $index !important;
-	}
-}
-
 .flex-row-align-center {
 	display: flex;
 	flex-direction: row;
