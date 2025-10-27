@@ -13,12 +13,10 @@
     "format:all": "prettier --write \"**/*.{js,vue,scss,css,json,md}\" --ignore-path .prettierignore"
   },
   "dependencies": {
-    "axios": "^1.9.0",
     "core-js": "^3.8.3",
     "element-plus": "^2.11.5",
     "github-markdown-css": "^5.8.1",
     "highlight.js": "^11.11.1",
-    "html2pdf.js": "^0.10.3",
     "markdown-it": "^14.1.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"

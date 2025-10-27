@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<div @click="fnxxx">点击下载canvas</div>
-		<div @click="savePDF">点击下载node</div>
 		<div class="content" id="content">
 			<header class="content-hd">
 				<section class="title">
@@ -172,8 +170,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import html2pdf from 'html2pdf.js/src';
 export default {
 	data() {
 		return {
@@ -255,93 +251,11 @@ export default {
 					'工作态度以及团队协作：不喜欢拖沓，今日事，今日毕；在部门中口碑很好，和同事们相处的很融洽，协作也比较愉快。',
 				],
 			},
-			list: [],
 		};
 	},
 	methods: {
 		formatText(text) {
 			return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-		},
-		fnxxx() {
-			// 这里可以添加一些方法逻辑
-			let element = document.getElementById('content');
-			// html2pdf(element);
-			const opt = {
-				// margin: 1,
-				filename: 'myfile.pdf',
-				image: { type: 'jpeg', quality: 0.98 },
-				html2canvas: { scale: 6 },
-				jsPDF: {
-					unit: 'in',
-					format: 'letter',
-					orientation: 'portrait',
-				},
-			};
-			html2pdf().set(opt).from(element).save();
-			// console.log(html2pdf(element));
-		},
-		getPDF() {
-			return axios.post('http://localhost:3000/pdf', {
-				url: 'http://localhost:8080/#/login/jianli',
-				margin: {
-					top: '20px',
-					bottom: '20px',
-					right: '20px',
-					left: '20px',
-				},
-				token: 'sfsf23rfdfsd',
-			});
-		},
-		savePDF() {
-			this.getPDF()
-				.then(res => {
-					console.log('PDF response:', res.data.data);
-					const blob = new Blob([res.data.data], { type: 'application/pdf' });
-					const link = document.createElement('a');
-					link.href = window.URL.createObjectURL(blob);
-					link.download = 'test.pdf';
-					link.click();
-				})
-				.catch(e => console.log(e));
-		},
-		fn() {
-			const apiUrl = 'http://localhost:3000/pdf'; // 后端API地址
-			const targetUrl = 'http://localhost:8080/#/login/jianli'; // 要转换为PDF的网页
-
-			const requestData = {
-				url: targetUrl,
-				margin: {
-					top: '20px',
-					bottom: '20px',
-					right: '20px',
-					left: '20px',
-				},
-			};
-			fetch(apiUrl, {
-				method: 'POST',
-				body: JSON.stringify(requestData),
-			})
-				.then(response => {
-					console.log('Response received:', response);
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
-					}
-					console.log('response.data', response.data);
-					const blob = new Blob([response.data], { type: 'application/pdf' });
-					console.log('Blob created:', blob);
-					return blob; // 假设后端返回的是PDF文件
-				})
-				.then(blob => {
-					// 创建下载链接
-					const link = document.createElement('a');
-					link.href = URL.createObjectURL(blob);
-					link.download = 'file.pdf';
-					link.click();
-					URL.revokeObjectURL(link.href);
-				})
-				.catch(error => {
-					console.error('Fetch error:', error);
-				});
 		},
 	},
 	computed: {},
