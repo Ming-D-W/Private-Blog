@@ -1,8 +1,10 @@
+@use 'sass:list';
+
 $flexDirArr: column, row;
-$dirLen: length($flexDirArr);
+$dirLen: list.length($flexDirArr);
 
 @for $index from 1 through $dirLen {
-	$val: nth($flexDirArr, $index);
+	$val: list.nth($flexDirArr, $index);
 	.flex-#{$val} {
 		display: flex;
 		flex-direction: $val;
@@ -11,11 +13,11 @@ $dirLen: length($flexDirArr);
 
 $flexAlignClassArr: start, center, end;
 $flexAlignCssArr: flex-start, center, flex-end;
-$flexAlignLen: length($flexAlignClassArr);
+$flexAlignLen: list.length($flexAlignClassArr);
 
 @for $index from 1 through $flexAlignLen {
-	$classVal: nth($flexAlignClassArr, $index);
-	$cssVal: nth($flexAlignCssArr, $index);
+	$classVal: list.nth($flexAlignClassArr, $index);
+	$cssVal: list.nth($flexAlignCssArr, $index);
 	.flex-align-#{$classVal} {
 		align-items: $cssVal !important;
 	}
@@ -23,11 +25,11 @@ $flexAlignLen: length($flexAlignClassArr);
 
 $flexJustClassArr: start, center, end, around, between;
 $flexJustCssArr: flex-start, center, flex-end, space-around, space-between;
-$flexJustLen: length($flexJustClassArr);
+$flexJustLen: list.length($flexJustClassArr);
 
 @for $index from 1 through $flexJustLen {
-	$classVal: nth($flexJustClassArr, $index);
-	$cssVal: nth($flexJustCssArr, $index);
+	$classVal: list.nth($flexJustClassArr, $index);
+	$cssVal: list.nth($flexJustCssArr, $index);
 	.flex-just-#{$classVal} {
 		justify-content: $cssVal !important;
 	}

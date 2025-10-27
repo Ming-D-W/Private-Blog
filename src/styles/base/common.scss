@@ -1,4 +1,6 @@
-@import '../themes/theme-color';
+@use 'sass:list';
+@use 'sass:color';
+@use '../themes/theme-color' as *;
 
 /* 字体 */
 $fontSizeArr: 20, 18, 16, 14, 13, 12;
@@ -6,8 +8,8 @@ $lineHeightArr: 28, 24, 24, 24, 22, 20;
 $fontLen: 6;
 
 @for $index from 1 through $fontLen {
-	$fontSize: nth($fontSizeArr, $index);
-	$lineHeight: nth($lineHeightArr, $index);
+	$fontSize: list.nth($fontSizeArr, $index);
+	$lineHeight: list.nth($lineHeightArr, $index);
 
 	.font-h#{$index}-regular {
 		font-size: #{$fontSize}px;
@@ -307,12 +309,12 @@ a.link {
 	padding: 0 2px;
 	color: $color-primary;
 	width: auto;
-	background-color: transparentize($color-primary, 0.9);
+	background-color: color.adjust($color-primary, $alpha: -0.9);
 }
 
 /* 字号 */
 @for $size from 12 through 36 {
-	@if index(12 13 14 16 18 20 24 26 28 36, $size) {
+	@if list.index(12 13 14 16 18 20 24 26 28 36, $size) {
 		.fz-#{$size} {
 			font-size: #{$size}px !important;
 		}
