@@ -227,7 +227,7 @@ export default {
 		 * 设置滚动监听
 		 */
 		setupScrollSpy() {
-			const navHeight = 80; // 导航栏高度
+			const navHeight = this.getScrollOffset(); // 动态获取导航栏高度
 
 			const onScroll = () => {
 				// 如果是程序化滚动（点击触发），跳过处理
@@ -283,6 +283,59 @@ export default {
 			requestAnimationFrame(onScroll);
 		},
 		/**
+		 * 尝试通过选择器获取元素的偏移量
+		 * @param {string} selector - CSS选择器
+		 * @param {number} padding - 额外的padding值
+		 * @returns {number} 元素底部位置 + padding,如果元素不存在返回0
+		 */
+		tryOffsetSelector(selector, padding) {
+			const el = document.querySelector(selector);
+			if (!el) return 0;
+			const bot = el.getBoundingClientRect().bottom;
+			if (bot < 0) return 0;
+			return bot + padding;
+		},
+
+		/**
+		 * 获取滚动偏移量 - 参考VitePress实现
+		 * @returns {number} 滚动偏移量(px)
+		 */
+		getScrollOffset() {
+			// 默认配置:使用header选择器
+			let scrollOffset = '.el-header';
+			let offset = 0;
+			let padding = 16; // 默认16px间距
+
+			// 支持对象配置 { selector: string, padding: number }
+			if (typeof scrollOffset === 'object' && 'padding' in scrollOffset) {
+				padding = scrollOffset.padding;
+				scrollOffset = scrollOffset.selector;
+			}
+
+			// 支持数字类型
+			if (typeof scrollOffset === 'number') {
+				offset = scrollOffset;
+			}
+			// 支持字符串选择器
+			else if (typeof scrollOffset === 'string') {
+				offset = this.tryOffsetSelector(scrollOffset, padding);
+			}
+			// 支持选择器数组
+			else if (Array.isArray(scrollOffset)) {
+				for (const selector of scrollOffset) {
+					const res = this.tryOffsetSelector(selector, padding);
+					if (res) {
+						offset = res;
+						break;
+					}
+				}
+			}
+
+			// 如果无法获取到偏移量,使用默认值80px
+			return offset || 80;
+		},
+
+		/**
 		 * 处理锚点点击
 		 */
 		handleAnchorClick(event, id) {
@@ -297,10 +350,16 @@ export default {
 				this.activeId = id;
 				this.updateMarker();
 
-				// 平滑滚动到目标元素
-				element.scrollIntoView({
+				// 获取动态偏移量
+				const offset = this.getScrollOffset();
+				// 计算目标位置
+				const elementPosition = element.getBoundingClientRect().top;
+				const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+				// 平滑滚动到目标元素,考虑header高度
+				window.scrollTo({
+					top: offsetPosition,
 					behavior: 'smooth',
-					block: 'start',
 				});
 
 				// 更新 URL hash

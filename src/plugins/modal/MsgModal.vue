@@ -24,22 +24,30 @@
 		</div>
 
 		<!-- 底部按钮 -->
-		<span v-if="visible" slot="footer">
-			<el-button
-				v-for="btn in options.btns"
-				:key="btn.key"
-				:type="btn.type"
-				@click="handleClose($event, btn.key)"
-			>
-				{{ btn.text }}
-			</el-button>
-		</span>
+		<template #footer>
+			<span v-if="visible">
+				<el-button
+					v-for="btn in options.btns"
+					:key="btn.key"
+					:type="btn.type"
+					@click="handleClose($event, btn.key)"
+				>
+					{{ btn.text }}
+				</el-button>
+			</span>
+		</template>
 	</el-dialog>
 </template>
 
 <script>
+import { ElDialog, ElButton } from 'element-plus';
+
 export default {
 	name: 'MsgModal',
+	components: {
+		ElDialog,
+		ElButton,
+	},
 	props: {
 		options: {
 			type: Object,

@@ -7,11 +7,12 @@
  * @LastEditTime: 2023-11-13 10:45:30
  */
 
-import { createApp } from 'vue';
+import { createApp, reactive } from 'vue';
 import MsgModal from './MsgModal.vue';
+import ElementPlus from 'element-plus';
 
 let instance, app, resolve, reject;
-let defaults = {
+let reactiveOptions = reactive({
 	title: '提示',
 	contentTitle: '',
 	content: '',
@@ -28,14 +29,14 @@ let defaults = {
 			key: 'confirm',
 		},
 	],
-};
+});
 
 const initInstance = () => {
 	const container = document.createElement('div');
 	document.body.appendChild(container);
 
 	app = createApp(MsgModal, {
-		options: defaults,
+		options: reactiveOptions,
 		onAction: result => {
 			resolve(result);
 		},
@@ -43,6 +44,9 @@ const initInstance = () => {
 			reject();
 		},
 	});
+
+	// 注册 Element Plus
+	app.use(ElementPlus);
 
 	instance = app.mount(container);
 };
@@ -52,12 +56,10 @@ const showMsg = options => {
 		initInstance();
 	}
 
-	// 合并配置选项
-	const mergedOptions = Object.assign({}, defaults, options);
-	// 更新组件的 props
-	if (instance.$props) {
-		instance.$props.options = mergedOptions;
-	}
+	// 更新响应式对象的属性
+	Object.keys(options).forEach(key => {
+		reactiveOptions[key] = options[key];
+	});
 
 	// 显示模态框
 	instance.show();
