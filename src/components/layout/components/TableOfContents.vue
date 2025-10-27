@@ -83,7 +83,7 @@ export default {
 		}
 	},
 	watch: {
-		'$route'() {
+		$route() {
 			// 路由变化时重新提取标题
 			this.$nextTick(() => {
 				// 先移除旧的监听器
@@ -194,8 +194,8 @@ export default {
 
 			const headingElements = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
 			this.headings = Array.from(headingElements)
-				.filter((el) => el.id && el.hasChildNodes()) // 过滤无 ID 和空标题
-				.map((heading) => ({
+				.filter(el => el.id && el.hasChildNodes()) // 过滤无 ID 和空标题
+				.map(heading => ({
 					id: heading.id,
 					text: this.serializeHeader(heading),
 					level: parseInt(heading.tagName.charAt(1)),
@@ -210,7 +210,7 @@ export default {
 		 * 缓存标题位置
 		 */
 		cacheHeaderPositions() {
-			this.cachedHeaderPositions = this.headings.map((h) => ({
+			this.cachedHeaderPositions = this.headings.map(h => ({
 				id: h.id,
 				top: this.getAbsoluteTop(h.element),
 			}));
@@ -284,7 +284,7 @@ export default {
 					block: 'start',
 				});
 				// 更新 URL hash
-				window.history.pushState(null, '', `#${id}`);
+				this.$router.replace({ path: this.$route.path, hash: `#${id}` });
 				// 更新激活状态
 				this.activeId = id;
 				this.updateMarker();
@@ -303,7 +303,7 @@ export default {
 .toc-container {
 	width: 250px;
 	position: sticky;
-	top: 80px;
+	top: 0px;
 	max-height: calc(100vh - 100px);
 	overflow-y: auto;
 	padding: 16px 0;
@@ -336,9 +336,7 @@ export default {
 	border-radius: 2px;
 	height: 18px;
 	background-color: #409eff;
-	transition:
-		top 0.25s cubic-bezier(0, 1, 0.5, 1),
-		opacity 0.25s;
+	transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), opacity 0.25s;
 }
 
 .toc-header {
@@ -513,4 +511,3 @@ export default {
 	}
 }
 </style>
-
