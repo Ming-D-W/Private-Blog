@@ -51,6 +51,7 @@ export default {
 			scrollListener: null,
 			resizeListener: null,
 			cachedHeaderPositions: [],
+			isScrollingProgrammatically: false,
 		};
 	},
 	computed: {
@@ -99,16 +100,23 @@ export default {
 	},
 	methods: {
 		/**
-		 * 节流函数
+		 * 节流函数 - 立即执行 + 冷却期模式
 		 */
 		throttle(fn, delay) {
 			let timer = null;
-			return (...args) => {
-				if (timer) return;
-				timer = setTimeout(() => {
+			let lastRan = 0;
+			return function (...args) {
+				const now = Date.now();
+				if (now - lastRan < delay) {
+					clearTimeout(timer);
+					timer = setTimeout(() => {
+						lastRan = Date.now();
+						fn.apply(this, args);
+					}, delay - (now - lastRan));
+				} else {
+					lastRan = now;
 					fn.apply(this, args);
-					timer = null;
-				}, delay);
+				}
 			};
 		},
 
@@ -222,6 +230,9 @@ export default {
 			const navHeight = 80; // 导航栏高度
 
 			const onScroll = () => {
+				// 如果是程序化滚动（点击触发），跳过处理
+				if (this.isScrollingProgrammatically) return;
+
 				const scrollY = window.scrollY;
 				const innerHeight = window.innerHeight;
 				const offsetHeight = document.body.offsetHeight;
@@ -276,18 +287,30 @@ export default {
 		 */
 		handleAnchorClick(event, id) {
 			event.preventDefault();
+
+			// 设置滚动锁，防止滚动监听器干扰
+			this.isScrollingProgrammatically = true;
+
 			const element = document.getElementById(id);
 			if (element) {
+				// 立即更新激活状态
+				this.activeId = id;
+				this.updateMarker();
+
 				// 平滑滚动到目标元素
 				element.scrollIntoView({
 					behavior: 'smooth',
 					block: 'start',
 				});
+
 				// 更新 URL hash
 				this.$router.replace({ path: this.$route.path, hash: `#${id}` });
-				// 更新激活状态
-				this.activeId = id;
-				this.updateMarker();
+
+				// 滚动动画大约需要 500-800ms，延迟后解锁
+				setTimeout(() => {
+					this.isScrollingProgrammatically = false;
+				}, 1000);
+
 				// 关闭移动端抽屉
 				if (this.isMobile) {
 					this.closeMobileDrawer();
@@ -302,11 +325,14 @@ export default {
 /* 桌面端 TOC 样式 */
 .toc-container {
 	width: 250px;
-	position: sticky;
-	top: 0px;
-	max-height: calc(100vh - 100px);
+	position: fixed;
+	top: 80px; /* header 高度 64px + 16px 间距 */
+	right: 0;
+	bottom: 0;
 	overflow-y: auto;
-	padding: 16px 0;
+	padding: 16px;
+	z-index: 100;
+	background-color: #ffffff; /* 添加背景色 */
 
 	/* 隐藏滚动条但保持可滚动 */
 	scrollbar-width: none; /* Firefox */

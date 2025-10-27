@@ -96,9 +96,15 @@ $menu-width-px: 200px;
 }
 
 .side-menu-box {
-	height: calc(100vh - $header-height);
+	position: fixed;
+	top: $header-height-px;
+	left: 0;
+	bottom: 0;
+	width: fit-content;
+	overflow-y: auto;
 	background-color: $color-white;
 	padding: 8px;
 	box-sizing: border-box;
+	z-index: 100;
 }
 </style>
