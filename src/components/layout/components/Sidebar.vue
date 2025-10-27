@@ -50,10 +50,6 @@ export default {
 $header-height-px: 64px;
 $page-min-width-px: 1366px;
 $menu-width-px: 200px;
-@function fadeout($color, $amount) {
-	$alpha: 1 - ($amount / 100); // 计算目标透明度
-	@return rgba(red($color), green($color), blue($color), $alpha);
-}
 
 .side-item {
 	font-family: PingFangSC-Regular, PingFang SC;
