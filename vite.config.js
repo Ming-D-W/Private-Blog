@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueMd from 'vite-vue-md';
 import path from 'path';
@@ -9,7 +9,10 @@ import anchor from 'markdown-it-anchor';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd(), '');
+	return {
+	base: env.VITE_BASE_URL || '/',
 	plugins: [
 		vue({
 			include: [/\.vue$/, /\.md$/], // 支持 .md 文件作为 Vue 组件
@@ -143,5 +146,6 @@ export default defineConfig({
 		assetsDir: 'assets',
 		sourcemap: false,
 	},
+	};
 });
 
