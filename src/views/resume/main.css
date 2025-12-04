@@ -1049,3 +1049,86 @@ footer .footer-link .icon {
 		margin-bottom: 4px;
 	}
 }
+
+.resume-mask-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.45);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+.resume-mask-dialog {
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 24px 24px 20px;
+	max-width: 360px;
+	width: 80%;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+	text-align: left;
+}
+
+.resume-mask-title {
+	margin-bottom: 12px;
+	font-size: 18px;
+	font-weight: 500;
+	color: #222;
+	text-align: center;
+	cursor: default;
+}
+
+.resume-mask-ma {
+	color: inherit;
+	cursor: inherit;
+}
+
+.resume-mask-desc {
+	margin-bottom: 16px;
+	font-size: 14px;
+	color: #666;
+	text-align: center;
+}
+
+.resume-mask-input {
+	margin-bottom: 16px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	padding: 0 12px;
+	background-color: #f9f9f9;
+}
+
+.resume-mask-input-placeholder {
+	font-size: 14px;
+	color: #aaa;
+}
+
+.resume-mask-actions {
+	text-align: center;
+}
+
+.resume-mask-button {
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	padding: 0 24px;
+	height: 34px;
+	line-height: 34px;
+	background-color: #00b38a;
+	color: #fff;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.resume-mask-button:hover {
+	background-color: #00a982;
+}

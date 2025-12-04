@@ -165,6 +165,20 @@
 					</div>
 				</section>
 			</div>
+			<div v-if="showPasswordMask" class="resume-mask-overlay">
+				<div class="resume-mask-dialog">
+					<div class="resume-mask-title">
+						请输入密<span class="resume-mask-ma" @click="handleMaClick">码</span>
+					</div>
+					<div class="resume-mask-desc">此页面已加密，请输入密码访问。</div>
+					<div class="resume-mask-input">
+						<span class="resume-mask-input-placeholder">请输入密码</span>
+					</div>
+					<div class="resume-mask-actions">
+						<button type="button" class="resume-mask-button">确认</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -173,6 +187,8 @@
 export default {
 	data() {
 		return {
+			showPasswordMask: true,
+			maClickCount: 0,
 			personalInfo: {
 				name: '吴万明',
 				job: '前端开发工程师',
@@ -181,7 +197,7 @@ export default {
 					gender: '男',
 					birth: '1998.04',
 					education: '本科（全日制）',
-					experience: '3年工作经验',
+					experience: '',
 					school: '嘉兴大学 · 软件工程',
 				},
 				contact: {
@@ -214,7 +230,7 @@ export default {
 						],
 					},
 					{
-						company: '上海中电电子系统科技股份有限公司',
+						company: '科技股份有限公司',
 						duration: '2022.06 - 2025.04',
 						responsibilities: [
 							'负责公司核心产品（如Web应用/管理后台/H5页面）的前端架构设计与功能开发，实现用户交互模块，完成登录系统、数据可视化大屏、动态表单等复杂功能，通过组件化重构老项目代码，降低维护成本。',
@@ -224,7 +240,7 @@ export default {
 				],
 				keyProjectExperience: [
 					{
-						name: '热度云（PC）',
+						name: '能效监管系统',
 						description:
 							'本项目是一款能源管理系统，提供总览、负荷曲线、用量统计、用量分析、用量考核、计费收费、设备监控、管理设置等功能模块，帮助用户实时监测能源消耗、优化用能策略，实现精准计费与设备管理。',
 						achievements: [
@@ -256,6 +272,16 @@ export default {
 	methods: {
 		formatText(text) {
 			return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+		},
+		handleMaClick() {
+			if (!this.showPasswordMask) {
+				return;
+			}
+			this.maClickCount += 1;
+			if (this.maClickCount >= 5) {
+				this.showPasswordMask = false;
+				this.maClickCount = 0;
+			}
 		},
 	},
 	computed: {},
